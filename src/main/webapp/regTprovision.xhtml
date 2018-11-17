@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+      <h:form>
+         <p:panel id="panel" header="Registrar titulo en Provision Nacional" style="margin-bottom:10px;">
+         <p:messages id="messages" />
+         <p:fieldset legend="Datos Personales" style="margin-bottom:20px">
+         <h:panelGrid columns="4" cellpadding="5">
+             <p:outputLabel for="persona" value="Nombres"/>
+             <p:selectOneMenu id="persona" value="" effect="fold" editable="true">
+                 <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="" />
+             </p:selectOneMenu>
+             <p:outputLabel for="apell" value="Apellidos" />
+             <p:inputText id="apell" value="#{personaBean.persona.apellPe}" required="true"/>
+            
+             <p:outputLabel for="ci" value="CI" />
+             <p:inputText id="ci" value="#{personaBean.persona.ciPe}" required="true"/>
+           
+             <p:outputLabel for="fecha" value="Fecha Nacimiento" />
+             <p:inputMask id="fecha" value="#{personaBean.persona.feNacPe}" required="true" mask="99/99/9999"/>
+           
+             <p:outputLabel for="edad" value="Edad" />
+             <p:inputText id="edad" value="#{personaBean.persona.edadPe}" required="true"/>
+ 
+             <p:outputLabel for="lugar" value="Lugar de Nacimiento" />
+             <p:inputText id="lugar" value="#{personaBean.persona.luNacPe}" required="true"/>
+         </h:panelGrid>
+         </p:fieldset>
+         
+        <p:fieldset legend="Datos del Ttiulo" style="margin-bottom:20px">
+         <h:panelGrid columns="4" cellpadding="5">
+             <p:outputLabel for="nombtitulo" value="Nombre del tiulo"/>
+             <p:inputText id="nombtitulo" value="#{personaBean.persona.nombPe}" required="true"/>
+             
+             <p:outputLabel for="fechaExp" value="Fecha Expedicion" />
+             <p:inputMask id="fechaExp" value="#{personaBean.persona.feNacPe}" required="true" mask="99/99/9999"/>
+           
+             <p:outputLabel for="nroProv" value="Titulo Nro." />
+             <p:inputText id="nroProv" value="#{personaBean.persona.edadPe}" required="true"/>
+          </h:panelGrid>
+         </p:fieldset>
+        <p:fieldset legend="Datos del Folio" style="margin-bottom:20px">
+         <h:panelGrid columns="4" cellpadding="5">
+             <p:outputLabel for="nroFolio" value="Folio Nro."/>
+             <p:inputText id="nroFolio" value="#{personaBean.persona.nombPe}" required="true"/>
+             
+             <p:outputLabel for="nroLibro" value="Libro Nro."/>
+             <p:inputText id="nroLibro" value="#{personaBean.persona.nombPe}" required="true"/>
+             
+             <p:outputLabel for="nroExpe" value="Nro.Expedicion"/>
+             <p:inputText id="nroExpe" value="#{personaBean.persona.nombPe}" required="true"/>
+             
+             <p:outputLabel for="fechaFolio" value="Fecha Folio" />
+             <p:inputMask id="fechaFolio" value="#{personaBean.persona.feNacPe}" required="true" mask="99/99/9999"/>
+           </h:panelGrid>
+         </p:fieldset>
+       </p:panel>
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton value="Guardar" update="panel" oncomplete="PF('dlg').show()" actionListener="#{personaBean.registrar()}" style="margin-right:20px;"/>
+                <p:commandButton resetValues="true" value="Reset Tag" update="panel" process="@this" style="margin-right:20px;" />
+            </f:facet>
+        </p:toolbar>
+    </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+ <h:form>
+         <p:panel id="panel" header="Verifar tiulo" style="margin-bottom:10px;">
+         <p:messages id="messages" />
+         <h:panelGrid columns="4" cellpadding="5">
+             <p:outputLabel for="nroProv" value="Nro. Titulo"/>
+             <p:password id="nroProv" value="" required="true"/>
+             
+             <p:outputLabel for="ci" value="CI" />
+             <p:password id="ci" value="" required="true" />
+       
+             <p:captcha label="Captcha" theme="" />
+          </h:panelGrid>
+     </p:panel>
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton value="Crear" update="panel" oncomplete="PF('dlg').show()"  style="margin-right:20px;"/>
+                <p:commandButton resetValues="true" value="Reset Tag" update="panel" process="@this" style="margin-right:20px;" />
+            </f:facet>
+        </p:toolbar>
+    </h:form>
+    </h:body>
+</html>
+
