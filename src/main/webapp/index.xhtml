@@ -10,7 +10,7 @@
 
     <h:body>
         <p:growl id="msj"  showDetail="true"/>
-        <h:form>
+        <h:form id="regdatos">
             <p:panel id="panel" header="Registrar Persona" style="margin-bottom:10px;">
                 <!-- <p:messages id="messages" />-->
                 <h:panelGrid columns="4" cellpadding="5">
@@ -40,10 +40,14 @@
                 </f:facet>
             </p:toolbar>
         </h:form>
-        <h:form>
+        <h:form id="listdatos">
             <p:commandButton update="datosper" value="Listar" actionListener="#{personaBean.listar()}" style="margin-right:20px;" />
             <p:dataTable id="datosper" var="person" value="#{personaBean.lstpersona}" style="margin-top:20px"
                           paginator="true" rows="5" paginatorPosition="bottom">
+                <p:column headerText="ID" filterBy="#{person.idPe}" filterMatchMode="contains">
+                    <p:outputLabel value="#{person.idPe}"  />
+                </p:column>
+                
                 <p:column headerText="Nombres" filterBy="#{person.nombPe}" filterMatchMode="contains">
                     <p:outputLabel value="#{person.nombPe}"  />
                 </p:column>
@@ -64,10 +68,50 @@
                     <p:outputLabel value="#{person.luNacPe}" />
                 </p:column>
                  <p:column headerText="Modificar">
-                     <p:commandLink value="Modificar"/>
+                     <p:commandButton  value="Modificiar" oncomplete="PF('wgdatos').show();"
+                         update=":dlg" style="margin-right:20px;"
+                         actionListener="#{personaBean.leerID(person)}">
+                   </p:commandButton>
+                     
+                </p:column>
+                <p:column headerText="Eliminar">
+                     <p:commandButton  value="Eliminar" oncomplete="PF('wgdatos').show();"
+                         update=":dlg" style="margin-right:20px;"
+                         actionListener="#{personaBean.eliminarID}">
+                   </p:commandButton>
+                     
                 </p:column>
             </p:dataTable>
         </h:form>
+        <p:dialog id="dlg" header="Modificar Datos" widgetVar="wgdatos" 
+                  showEffect="explode" hideEffect="explode" modal="true">
+            <h:form id="updatos">       
+             <h:panelGrid columns="4" cellpadding="5">
+                    <p:outputLabel  value="Nombres"/>
+                    <p:inputText value="#{personaBean.persona.nombPe}" />
+
+                    <p:outputLabel value="Apellidos" />
+                    <p:inputText value="#{personaBean.persona.apellPe}" />
+
+                    <p:outputLabel value="CI" />
+                    <p:inputText value="#{personaBean.persona.ciPe}" />
+
+                    <p:outputLabel value="Fecha Nacimiento" />
+                    <p:inputText value="#{personaBean.persona.feNacPe}" />
+
+                    <p:outputLabel value="Edad" />
+                    <p:inputText  value="#{personaBean.persona.edadPe}" />
+
+                    <p:outputLabel  value="Lugar de Nacimiento" />
+                    <p:inputText value="#{personaBean.persona.luNacPe}" />
+                    <p:commandButton value="Actualizar" oncomplete="PF('wgdatos').hide();"
+                                     update=":listdatos:datosper"
+                                     actionListener="#{personaBean.modificar()}" style="margin-right:20px;" />
+                    <p:commandButton  value="Cancelar" oncomplete="PF('wgdatos').hide();"
+                                      update=":regdatos" style="margin-right:20px;" />
+                </h:panelGrid>       
+            </h:form>  
+            </p:dialog> 
         <br />
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>

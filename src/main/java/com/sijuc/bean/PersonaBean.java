@@ -2,18 +2,21 @@ package com.sijuc.bean;
 
 import com.sijuc.dao.PersonaDAO;
 import com.sijuc.model.Persona;
-import java.net.URL;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean 
-@RequestScoped
-public class PersonaBean{
+@SessionScoped
+public class PersonaBean implements Serializable{
+//     private static final long serialVersionUID = 8799656478674716638L;
+
     private Persona persona = new Persona();
     private  List<Persona> lstpersona;
+    private List<Persona> leerID;
+    
 
     public List<Persona> getLstpersona() {
         return lstpersona;
@@ -60,5 +63,32 @@ public class PersonaBean{
         ps.setEdadPe(2);
         ps.setLuNacPe("llallagua");
         lstpersona.add(ps);
-    }**/
+     
+     * @param per
+     * @throws java.lang.Exception}**/
+    public void leerID(Persona per) throws Exception{
+        PersonaDAO dao;
+        Persona temp;
+        try {
+            dao = new PersonaDAO();
+            temp = dao.leerID(per);
+            if (temp != null){
+                this.persona =  temp;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    public void modificar() throws Exception{
+        PersonaDAO dao;
+        try {
+            dao = new PersonaDAO();
+            dao.modificar(persona);
+            this.listar();
+          // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informe", "Datos Registrados.");
+           //PrimeFaces.current().dialog().showMessageDynamic(message);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
