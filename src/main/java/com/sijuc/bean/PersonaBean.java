@@ -91,4 +91,16 @@ public class PersonaBean implements Serializable{
             throw e;
         }
     }
+    public void eliminar(Persona per) throws Exception{
+        PersonaDAO dao;
+        try {
+            dao = new PersonaDAO();
+            dao.eliminar(per);
+            this.listar();
+          // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informe", "Datos Registrados.");
+           //PrimeFaces.current().dialog().showMessageDynamic(message);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

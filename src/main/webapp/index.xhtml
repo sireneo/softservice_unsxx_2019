@@ -67,19 +67,18 @@
                 <p:column headerText="Lugar" filterBy="#{person.luNacPe}" filterMatchMode="contains">
                     <p:outputLabel value="#{person.luNacPe}" />
                 </p:column>
-                 <p:column headerText="Modificar">
+                
+                <p:column headerText="Modificar">
                      <p:commandButton  value="Modificiar" oncomplete="PF('wgdatos').show();"
                          update=":dlg" style="margin-right:20px;"
                          actionListener="#{personaBean.leerID(person)}">
                    </p:commandButton>
-                     
                 </p:column>
+                
                 <p:column headerText="Eliminar">
-                     <p:commandButton  value="Eliminar" oncomplete="PF('wgdatos').show();"
-                         update=":dlg" style="margin-right:20px;"
-                         actionListener="#{personaBean.eliminarID}">
+                     <p:commandButton  value="Eliminar" update="datosper" style="margin-right:20px;"
+                                       actionListener="#{personaBean.eliminar(person)}">
                    </p:commandButton>
-                     
                 </p:column>
             </p:dataTable>
         </h:form>
