@@ -3,115 +3,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
     <h:head>
         <title>Registra Persona</title>
     </h:head>
 
     <h:body>
-        <p:growl id="msj"  showDetail="true"/>
-        <h:form id="regdatos">
-            <p:panel id="panel" header="Registrar Persona" style="margin-bottom:10px;">
-                <!-- <p:messages id="messages" />-->
-                <h:panelGrid columns="4" cellpadding="5">
-                    <p:outputLabel for="nomb" value="Nombres"/>
-                    <p:inputText id="nomb" value="#{personaBean.persona.nombPe}" required="true"/>
+                Pagina principal
+        <div id="top">
+            <ui:insert name="top">
+                <h:form>
+                    <p:graphicImage   height="400" width="1550" name="/images/banner-unsxx.jpg" />
+                </h:form>
+            </ui:insert>
+        </div>
 
-                    <p:outputLabel for="apell" value="Apellidos" />
-                    <p:inputText id="apell" value="#{personaBean.persona.apellPe}" required="true"/>
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+                <p:commandLink value="Ir al pagina" action="principal.xhtml?faces-redirect=true"/>
+            </ui:insert>
+        </div>
 
-                    <p:outputLabel for="ci" value="CI" />
-                    <p:inputText id="ci" value="#{personaBean.persona.ciPe}" required="true"/>
+        <div id="bottom">
+            <ui:insert name="bottom">Bottom</ui:insert>
+        </div>
 
-                    <p:outputLabel for="fecha" value="Fecha Nacimiento" />
-                    <p:inputMask id="fecha" value="#{personaBean.persona.feNacPe}" required="true" mask="99/99/9999"/>
-
-                    <p:outputLabel for="edad" value="Edad" />
-                    <p:inputText id="edad" value="#{personaBean.persona.edadPe}" required="true"/>
-
-                    <p:outputLabel for="lugar" value="Lugar de Nacimiento" />
-                    <p:inputText id="lugar" value="#{personaBean.persona.luNacPe}" required="true"/>
-                </h:panelGrid>
-            </p:panel>
-            <p:toolbar>
-                <f:facet name="left">
-                    <p:commandButton value="Guardar" update=":msj" actionListener="#{personaBean.registrar()}" style="margin-right:20px;" />
-                    <p:commandButton  value="Limpiar" actionListener="#{personaBean.listar()}" style="margin-right:20px;" />
-                </f:facet>
-            </p:toolbar>
-        </h:form>
-        <h:form id="listdatos">
-            <p:commandButton update="datosper" value="Listar" actionListener="#{personaBean.listar()}" style="margin-right:20px;" />
-            <p:dataTable id="datosper" var="person" value="#{personaBean.lstpersona}" style="margin-top:20px"
-                          paginator="true" rows="5" paginatorPosition="bottom">
-                <p:column headerText="ID" filterBy="#{person.idPe}" filterMatchMode="contains">
-                    <p:outputLabel value="#{person.idPe}"  />
-                </p:column>
                 
-                <p:column headerText="Nombres" filterBy="#{person.nombPe}" filterMatchMode="contains">
-                    <p:outputLabel value="#{person.nombPe}"  />
-                </p:column>
-                
-                <p:column headerText="Apellidos" filterBy="#{person.apellPe}" filterMatchMode="contains">
-                    <p:outputLabel value="#{person.apellPe}" />
-                </p:column>
-                <p:column  headerText="CI" filterBy="#{person.ciPe}" filterMatchMode="contains">
-                    <p:outputLabel value="#{person.ciPe}" />
-                </p:column>
-                <p:column  headerText="Fecha Nacimiento" filterBy="#{person.feNacPe}" filterMatchMode="contains">
-                    <p:outputLabel value="#{person.feNacPe}"/>
-                </p:column>
-                <p:column headerText="Edad" filterBy="#{person.edadPe}" filterMatchMode="exact">
-                    <p:outputLabel value="#{person.edadPe}"/>
-                </p:column>
-                <p:column headerText="Lugar" filterBy="#{person.luNacPe}" filterMatchMode="contains">
-                    <p:outputLabel value="#{person.luNacPe}" />
-                </p:column>
-                
-                <p:column headerText="Modificar">
-                     <p:commandButton  value="Modificiar" oncomplete="PF('wgdatos').show();"
-                         update=":dlg" style="margin-right:20px;"
-                         actionListener="#{personaBean.leerID(person)}">
-                   </p:commandButton>
-                </p:column>
-                
-                <p:column headerText="Eliminar">
-                     <p:commandButton  value="Eliminar" update="datosper" style="margin-right:20px;"
-                                       actionListener="#{personaBean.eliminar(person)}">
-                   </p:commandButton>
-                </p:column>
-            </p:dataTable>
-        </h:form>
-        <p:dialog id="dlg" header="Modificar Datos" widgetVar="wgdatos" 
-                  showEffect="explode" hideEffect="explode" modal="true">
-            <h:form id="updatos">       
-             <h:panelGrid columns="4" cellpadding="5">
-                    <p:outputLabel  value="Nombres"/>
-                    <p:inputText value="#{personaBean.persona.nombPe}" />
-
-                    <p:outputLabel value="Apellidos" />
-                    <p:inputText value="#{personaBean.persona.apellPe}" />
-
-                    <p:outputLabel value="CI" />
-                    <p:inputText value="#{personaBean.persona.ciPe}" />
-
-                    <p:outputLabel value="Fecha Nacimiento" />
-                    <p:inputText value="#{personaBean.persona.feNacPe}" />
-
-                    <p:outputLabel value="Edad" />
-                    <p:inputText  value="#{personaBean.persona.edadPe}" />
-
-                    <p:outputLabel  value="Lugar de Nacimiento" />
-                    <p:inputText value="#{personaBean.persona.luNacPe}" />
-                    <p:commandButton value="Actualizar" oncomplete="PF('wgdatos').hide();"
-                                     update=":listdatos:datosper"
-                                     actionListener="#{personaBean.modificar()}" style="margin-right:20px;" />
-                    <p:commandButton  value="Cancelar" oncomplete="PF('wgdatos').hide();"
-                                      update=":regdatos" style="margin-right:20px;" />
-                </h:panelGrid>       
-            </h:form>  
-            </p:dialog> 
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>
 </html>

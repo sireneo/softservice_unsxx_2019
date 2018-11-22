@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+           <ui:define name="content">
+        <h:form id="listdatos">
+            <p:commandButton value="Nuevo Titulo" oncomplete="PF('wgdatos').show();"
+                             actionListener="#{tprovisionBean.setAccion('Registrar')}"
+                             update=":dlg"/>
+            
+            <p:commandButton update="datosper" value="Listar Titulos" 
+                             actionListener="#{personaBean.listarprov()}" style="margin-right:20px;" />
+            <p:dataTable id="datosper" var="provi" value="#{personaBean.lstpersona}" style="margin-top:20px"
+                          paginator="true" rows="5" paginatorPosition="bottom">
+                
+                <p:column headerText="Nombres" filterBy="#{provi.nombPe}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.nombPe}"  />
+                </p:column>
+                <p:column headerText="Nombres" filterBy="#{provi.apellPe}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.apellPe}"  />
+                </p:column>
+                
+                <p:column headerText="CI" filterBy="#{provi.ciPe}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.ciPe}" />
+                </p:column>
+                <p:column headerText="Fecha" filterBy="#{provi.provis.fechaProv}" filterMatchMode="exact">
+                    <p:outputLabel value="#{provi.provis.fechaProv}"/>
+                </p:column>
+                <p:column headerText="Nombre" filterBy="#{provi.provis.nombProv}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.provis.nombProv}" />
+                </p:column>
+                <p:column headerText="Nro de Titulo" filterBy="#{provi.provis.nroProv}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.provis.nroProv}" />
+                </p:column>                
+                <p:column headerText="Modificar">
+                     <p:commandButton  value="Modificiar" oncomplete="PF('wgdatos').show();"
+                         update=":dlg" style="margin-right:20px;"
+                         actionListener="#{personaBean.leerID(person)}">
+                   </p:commandButton>
+                </p:column>
+                
+                <p:column headerText="Eliminar">
+                     <p:commandButton  value="Eliminar" update="datosper" style="margin-right:20px;"
+                                       actionListener="#{personaBean.eliminar(person)}">
+                   </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog id="dlg" header="Registrar Datos del Titulo Provision Nacional" widgetVar="wgdatos" 
+                  showEffect="explode" hideEffect="explode" modal="true">
+            <h:form id="updatos">       
+                <p:fieldset legend="Datos Profesional" style="margin-bottom:20px">
+                <h:panelGrid columns="4" cellpadding="5">
+                    <p:outputLabel for="nombre" value="Nombres"/>
+                    <p:inputText id="nombre" required="true" 
+                                 value="#{tprovisionBean.persona.nombPe}" >
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+                    
+                    <p:outputLabel value="Apellidos" />
+                    <p:inputText value="#{tprovisionBean.persona.apellPe}" />
+
+                    <p:outputLabel value="CI" />
+                    <p:inputText value="#{tprovisionBean.persona.ciPe}" />
+
+                    <p:outputLabel value="Fecha Nacimiento" />
+                    <p:inputText value="#{tprovisionBean.persona.feNacPe}" />
+
+                    <p:outputLabel value="Edad" />
+                    <p:inputText  value="#{tprovisionBean.persona.edadPe}" />
+
+                    <p:outputLabel  value="Lugar de Nacimiento" />
+                    <p:inputText value="#{tprovisionBean.persona.luNacPe}" />
+                </h:panelGrid>
+                </p:fieldset>
+                
+                <p:fieldset legend="Datos Titulo" style="margin-bottom:20px">
+                <h:panelGrid columns="4" cellpadding="5">
+                    <p:outputLabel  value="Nombre del Titulo" />
+                    <p:inputText value="#{tprovisionBean.provision.nombProv}" />
+                   
+                    <p:outputLabel  value="Fecha" />
+                    <p:inputText value="#{tprovisionBean.provision.fechaProv}" />
+                   
+                    <p:outputLabel  value="Nro. Carton" />
+                    <p:inputText value="#{tprovisionBean.provision.nroProv}" />
+                </h:panelGrid>
+                </p:fieldset>    
+                
+                <p:fieldset legend="Datos Folio" style="margin-bottom:20px">
+                <h:panelGrid columns="4" cellpadding="5">
+                    <p:outputLabel  value="Nro. Folio" />
+                    <p:inputText value="#{tprovisionBean.folio.nroFolio}" />
+                   
+                    <p:outputLabel  value="Nro Libro" />
+                    <p:inputText value="#{tprovisionBean.folio.nroLibro}" />
+                   
+                    <p:outputLabel  value="Nro. Titulo" />
+                    <p:inputText value="#{tprovisionBean.folio.nroExpe}" />
+                
+                    <p:outputLabel  value="Fecha Recojo" />
+                    <p:inputText value="#{tprovisionBean.folio.fechaExpe}" />
+                
+                </h:panelGrid>
+                </p:fieldset>    
+             
+                <h:panelGrid columns="4" cellpadding="5">
+                    <p:commandButton value="#{tprovisionBean.accion}" oncomplete="PF('wgdatos').hide();"
+                                     update=":listdatos:datosper"
+                                     actionListener="#{tprovisionBean.operar()}" style="margin-right:20px;" />
+                    <p:commandButton  value="Cancelar" oncomplete="PF('wgdatos').hide();"
+                                      update=":listdatos:datosper" style="margin-right:20px;" />
+                </h:panelGrid>
+            </h:form>  
+            </p:dialog> 
+        
+           </ui:define>
+        </ui:composition>
+    </body>
+</html>

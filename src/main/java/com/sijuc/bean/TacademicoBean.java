@@ -1,7 +1,10 @@
 package com.sijuc.bean;
 
 import com.sijuc.dao.PersonaDAO;
+import com.sijuc.dao.TacademicoDAO;
+import com.sijuc.model.Folio;
 import com.sijuc.model.Persona;
+import com.sijuc.model.Tacademico;
 import com.sijuc.model.Tprovision;
 import com.sijuc.model.Usuario;
 import java.io.Serializable;
@@ -13,24 +16,24 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean 
 @ViewScoped
-public class PersonaBean implements Serializable{
-   // private static final long serialVersionUID = 8799656478674716638L;
+public class TacademicoBean implements Serializable{
+    //private static final long serialVersionUID = 8799656478674716638L;
 
     private Persona persona = new Persona();
     private Usuario usuario = new Usuario();
+    private Tacademico academico = new Tacademico();
+    private Folio folio = new Folio();
+
+    public Tacademico getAcademico() {
+        return academico;
+    }
+
+    public void setAcademico(Tacademico academico) {
+        this.academico = academico;
+    }
     
     private  List<Persona> lstpersona;
     private List<Persona> leerID;
-    private List<Tprovision> lstprovision;
-
-    public List<Tprovision> getLstprovision() {
-        return lstprovision;
-    }
-
-    public void setLstprovision(List<Tprovision> lstprovision) {
-        this.lstprovision = lstprovision;
-    }
-            
 
     public Usuario getUsuario() {
         return usuario;
@@ -39,7 +42,16 @@ public class PersonaBean implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public Folio getFolio() {
+        return folio;
+    }
+
+    public void setFolio(Folio folio) {
+        this.folio = folio;
+    }
     
+  
     //mejora la presentacion de navegacion de los botones
     private String accion;
     
@@ -79,7 +91,7 @@ public class PersonaBean implements Serializable{
     public void operar() throws Exception{
         switch (accion){
             case "Registrar":
-                this.registrar();
+                this.regacademico();
                 this.limpiar();
             break;
             case "Modificar":
@@ -99,18 +111,27 @@ public class PersonaBean implements Serializable{
         this.persona.setEdadPe(0);
         this.persona.setLuNacPe("");
         
-        this.usuario.setIdUser(0);
-        this.usuario.setNombUser("");
-        this.usuario.setPassUser("");
-        this.usuario.setTipoUser("");
-        this.usuario.setIdPe(persona);
-     
+        this.academico.setIdTac(0);
+        this.academico.setNombTac("");
+        this.academico.setFechaTac("");
+        this.academico.setNroTacCara(0);
+        this.academico.setNroTacAtras(0);
+        this.academico.setIdPe(persona);
+       
+        this.folio.setIdTi(0);
+        this.folio.setNroFolio(0);
+        this.folio.setNroLibro(0);
+        this.folio.setNroExpe(0);
+        this.folio.setFechaExpe("");
+        this.folio.setIdProv(persona);
     }
-    private void registrar() throws Exception{
-        PersonaDAO dao;
+    
+    //registrando datos al persona provison y folio
+    private void regacademico() throws Exception{
+        TacademicoDAO dao;
         try {
-            dao = new PersonaDAO();
-            dao.registrar(persona, usuario);
+            dao = new TacademicoDAO();
+            dao.registrar(persona, academico);
             this.listar();
         } catch (Exception e) {
             throw e;
@@ -137,15 +158,6 @@ public class PersonaBean implements Serializable{
             throw e;
         }
     }
-    public void listarprov() throws Exception{
-        PersonaDAO dao;
-        try {
-            dao = new PersonaDAO();
-            lstpersona = dao.listaprov();
-          } catch (Exception e) {
-            throw e;
-        }
-    }
     
     public void leerID(Persona per) throws Exception{
         PersonaDAO dao;
@@ -168,8 +180,6 @@ public class PersonaBean implements Serializable{
             dao = new PersonaDAO();
             dao.eliminar(per);
             this.listar();
-          // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informe", "Datos Registrados.");
-           //PrimeFaces.current().dialog().showMessageDynamic(message);
         } catch (Exception e) {
             throw e;
         }

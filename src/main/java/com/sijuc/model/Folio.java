@@ -1,6 +1,8 @@
 package com.sijuc.model;
 
-public class Folio {
+import java.io.Serializable;
+
+public class Folio implements Serializable{
   private int idTi;
   private int nroFolio;
   private int nroLibro;

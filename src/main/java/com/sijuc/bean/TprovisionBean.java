@@ -1,6 +1,8 @@
 package com.sijuc.bean;
 
 import com.sijuc.dao.PersonaDAO;
+import com.sijuc.dao.TprovisionDAO;
+import com.sijuc.model.Folio;
 import com.sijuc.model.Persona;
 import com.sijuc.model.Tprovision;
 import com.sijuc.model.Usuario;
@@ -13,11 +15,13 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean 
 @ViewScoped
-public class PersonaBean implements Serializable{
+public class TprovisionBean {
    // private static final long serialVersionUID = 8799656478674716638L;
 
     private Persona persona = new Persona();
     private Usuario usuario = new Usuario();
+    private Tprovision provision = new Tprovision();
+    private Folio folio = new Folio();
     
     private  List<Persona> lstpersona;
     private List<Persona> leerID;
@@ -30,7 +34,6 @@ public class PersonaBean implements Serializable{
     public void setLstprovision(List<Tprovision> lstprovision) {
         this.lstprovision = lstprovision;
     }
-            
 
     public Usuario getUsuario() {
         return usuario;
@@ -39,6 +42,24 @@ public class PersonaBean implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public Tprovision getProvision() {
+        return provision;
+    }
+
+    public void setProvision(Tprovision provision) {
+        this.provision = provision;
+    }
+
+    public Folio getFolio() {
+        return folio;
+    }
+
+    public void setFolio(Folio folio) {
+        this.folio = folio;
+    }
+    
+        
     
     //mejora la presentacion de navegacion de los botones
     private String accion;
@@ -79,7 +100,7 @@ public class PersonaBean implements Serializable{
     public void operar() throws Exception{
         switch (accion){
             case "Registrar":
-                this.registrar();
+                this.regprovision();
                 this.limpiar();
             break;
             case "Modificar":
@@ -99,19 +120,26 @@ public class PersonaBean implements Serializable{
         this.persona.setEdadPe(0);
         this.persona.setLuNacPe("");
         
-        this.usuario.setIdUser(0);
-        this.usuario.setNombUser("");
-        this.usuario.setPassUser("");
-        this.usuario.setTipoUser("");
-        this.usuario.setIdPe(persona);
-     
+        this.provision.setIdProv(0);
+        this.provision.setFechaProv("");
+        this.provision.setNroProv(0);
+        this.provision.setIdPe(persona);
+        
+        this.folio.setIdTi(0);
+        this.folio.setNroFolio(0);
+        this.folio.setNroLibro(0);
+        this.folio.setNroExpe(0);
+        this.folio.setFechaExpe("");
+        this.folio.setIdProv(persona);
     }
-    private void registrar() throws Exception{
-        PersonaDAO dao;
+    
+    //registrando datos al persona provison y folio
+    private void regprovision() throws Exception{
+        TprovisionDAO dao;
         try {
-            dao = new PersonaDAO();
-            dao.registrar(persona, usuario);
-            this.listar();
+            dao = new TprovisionDAO();
+            dao.registrar(persona, provision, folio);
+         //   this.listar();
         } catch (Exception e) {
             throw e;
         }
@@ -122,31 +150,22 @@ public class PersonaBean implements Serializable{
         try {
             dao = new PersonaDAO();
             dao.modificar(persona);
-            this.listar();
+            //this.listar();
         } catch (Exception e) {
             throw e;
         }
     }
     
-    public void listar() throws Exception{
+    /*public void listar() throws Exception{
         PersonaDAO dao;
         try {
             dao = new PersonaDAO();
-            lstpersona = dao.listar();
+            lstprovision = dao.listaprov();
           } catch (Exception e) {
             throw e;
         }
     }
-    public void listarprov() throws Exception{
-        PersonaDAO dao;
-        try {
-            dao = new PersonaDAO();
-            lstpersona = dao.listaprov();
-          } catch (Exception e) {
-            throw e;
-        }
-    }
-    
+    */
     public void leerID(Persona per) throws Exception{
         PersonaDAO dao;
         Persona temp;
@@ -167,11 +186,10 @@ public class PersonaBean implements Serializable{
         try {
             dao = new PersonaDAO();
             dao.eliminar(per);
-            this.listar();
-          // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informe", "Datos Registrados.");
-           //PrimeFaces.current().dialog().showMessageDynamic(message);
+          //  this.listar();
         } catch (Exception e) {
             throw e;
         }
     }
+    //constructor
 }

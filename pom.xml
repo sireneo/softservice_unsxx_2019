@@ -42,12 +42,13 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>1.7.4</version>
         </dependency>
+        
     </dependencies>
 
     <build>
          <finalName>softserviceunsxx2018</finalName>
         <plugins>
-            <!-- <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
@@ -67,7 +68,7 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            -->
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
