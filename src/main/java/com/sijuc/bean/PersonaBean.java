@@ -1,6 +1,7 @@
 package com.sijuc.bean;
 
 import com.sijuc.dao.PersonaDAO;
+import com.sijuc.model.Folio;
 import com.sijuc.model.Persona;
 import com.sijuc.model.Tprovision;
 import com.sijuc.model.Usuario;
@@ -14,7 +15,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean 
 @ViewScoped
 public class PersonaBean implements Serializable{
-   // private static final long serialVersionUID = 8799656478674716638L;
 
     private Persona persona = new Persona();
     private Usuario usuario = new Usuario();
@@ -22,7 +22,7 @@ public class PersonaBean implements Serializable{
     private  List<Persona> lstpersona;
     private List<Persona> leerID;
     private List<Tprovision> lstprovision;
-
+    
     public List<Tprovision> getLstprovision() {
         return lstprovision;
     }

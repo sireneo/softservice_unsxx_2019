@@ -8,8 +8,18 @@ public class Tprovision implements Serializable{
     private String fechaProv;
     private int nroProv;
     private Persona idPe;
-    //private Folio folio;
     private Persona person;
+    private Folio folio = new Folio();
+
+    public Folio getFolio() {
+        return folio;
+    }
+
+    public void setFolio(Folio folio) {
+        this.folio = folio;
+    }
+    
+    
     
     public Persona getPerson() {
         return person;
@@ -19,15 +29,7 @@ public class Tprovision implements Serializable{
         this.person = person;
     }
         
-   /* public Folio getFolio() {
-        return folio;
-    }
-
-    public void setFolio(Folio folio) {
-        this.folio = folio;
-    }
-    */
-    
+   
     @Override
     public String toString() {
         return "Tprovision{" + "idProv=" + idProv + '}';

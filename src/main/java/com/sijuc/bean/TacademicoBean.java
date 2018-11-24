@@ -118,12 +118,6 @@ public class TacademicoBean implements Serializable{
         this.academico.setNroTacAtras(0);
         this.academico.setIdPe(persona);
        
-        this.folio.setIdTi(0);
-        this.folio.setNroFolio(0);
-        this.folio.setNroLibro(0);
-        this.folio.setNroExpe(0);
-        this.folio.setFechaExpe("");
-        this.folio.setIdProv(persona);
     }
     
     //registrando datos al persona provison y folio

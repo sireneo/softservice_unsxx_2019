@@ -8,8 +8,9 @@ public class Folio implements Serializable{
   private int nroLibro;
   private int nroExpe;
   private String fechaExpe;
-  private Persona idProv;
+  private Tprovision idProv; 
 
+  
     public int getIdTi() {
         return idTi;
     }
@@ -50,12 +51,12 @@ public class Folio implements Serializable{
         this.fechaExpe = fechaExpe;
     }
 
-    public Persona getIdProv() {
+    public Tprovision getIdProv() {
         return idProv;
     }
 
-    public void setIdProv(Persona idProv) {
+    public void setIdProv(Tprovision idProv) {
         this.idProv = idProv;
     }
-  
+    
 }

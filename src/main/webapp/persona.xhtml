@@ -17,7 +17,10 @@
                 <p:commandButton update="datosper" value="Listar Usuarios" actionListener="#{personaBean.listar()}" style="margin-right:20px;" />
                 
                 <p:dataTable id="datosper" var="person" value="#{personaBean.lstpersona}" style="margin-top:20px"
-                          paginator="true" rows="5" paginatorPosition="bottom">
+                          paginator="true" rows="7" paginatorPosition="bottom">
+                   <f:facet name="header">
+                       Detalle Cuenta
+                    </f:facet>
                 <p:column headerText="Codigo" filterBy="#{person.idPe}" filterMatchMode="contains">
                     <p:outputLabel value="#{person.idPe}"  />
                 </p:column>
@@ -58,56 +61,94 @@
         </h:form>
         <p:dialog id="dlg" header="Modificar Datos" widgetVar="wgdatos" 
                   showEffect="explode" hideEffect="explode" modal="true">
+            <p:growl id="growl" showDetail="true" sticky="true" />  
+
             <h:form >
             <p:fieldset legend="Datos Persona" style="margin-bottom:20px">
-            
-                <h:panelGrid columns="4" cellpadding="5">
-                    <p:outputLabel  value="Nombres"/>
-                    <p:inputText value="#{personaBean.persona.nombPe}" />
-
-                    <p:outputLabel value="Apellidos" />
-                    <p:inputText value="#{personaBean.persona.apellPe}" />
-
-                    <p:outputLabel value="CI" />
-                    <p:inputText value="#{personaBean.persona.ciPe}" />
-
-                    <p:outputLabel value="Fecha Nacimiento" />
-                    <p:inputMask mask="99/99/9999" value="#{personaBean.persona.feNacPe}" />
-
-                    <p:outputLabel value="Edad" />
-                    <p:inputText  value="#{personaBean.persona.edadPe}" />
-
-                    <p:outputLabel  value="Lugar de Nacimiento" />
-                    <p:inputText  value="#{personaBean.persona.luNacPe}" />
+                <h:panelGrid columns="3" cellspacing="5 ">
+                    <p:outputLabel for="txtNombres" value="Nombres"/>
+                    <p:inputText id="txtNombres" value="#{personaBean.persona.nombPe}" 
+                                 required="true" requiredMessage="Campo requerido">
+                    <p:clientValidator />
+                    </p:inputText>
+                    <p:message for="txtNombres" display="icon"/>
+                    <p:outputLabel for="txtApellidos" value="Apellidos" />
+                    <p:inputText id="txtApellidos" type="text" 
+                                 value="#{personaBean.persona.apellPe}"
+                                 required="true" requiredMessage="Campo requerido">
+                        
+                        <p:clientValidator />
+                    </p:inputText>
+                    <p:message for="txtApellidos" display="icon"/>
+                    <p:outputLabel for="txtCi" value="CI" />
+                    <p:inputText id="txtCi" value="#{personaBean.persona.ciPe}" 
+                                 required="true" requiredMessage="Campo requerido">
+                    <p:clientValidator />
+                    </p:inputText>
+                    <p:message for="txtCi" display="icon"/>
+                    <p:outputLabel for="txtFecha" value="Fecha Nacimiento" />
+                    <p:inputMask id="txtFecha" mask="99/99/9999" value="#{personaBean.persona.feNacPe}" 
+                                 required="true" requiredMessage="Campo requerido">
+                     <p:clientValidator />
+                    </p:inputMask>
+                    <p:message for="txtFecha" display="icon"/>
+                    <p:outputLabel for="txtEdad" value="Edad" />
+                    <p:inputText  id="txtEdad" value="#{personaBean.persona.edadPe}"
+                                  required="true" requiredMessage="Campo requerido">
+                    <p:clientValidator />
+                    </p:inputText>
+                     <p:message for="txtFecha" display="icon"/>
+                     <p:outputLabel  for="txtLugar" value="Lugar de Nacimiento" />
+                     <p:inputText id="txtLugar" value="#{personaBean.persona.luNacPe}" 
+                                  required="true" requiredMessage="Campo requerido">
+                    <p:clientValidator />
+                     </p:inputText>
+                    <p:message for="txtLugar" display="icon"/>
                     
              </h:panelGrid>
             </p:fieldset>
             
              <p:fieldset legend="Datos de la Cuenta" style="margin-bottom:20px">                
-                 <h:panelGrid columns="4" cellpadding="5" id="panel1">
-                    <p:outputLabel  value="Tipo" />
-                    <p:selectOneMenu  value="#{personaBean.usuario.tipoUser}" >
+                 <h:panelGrid columns="3" id="panel1">
+                     <p:outputLabel  for="txtTipo" value="Tipo" />
+                     <p:selectOneMenu id="txtTipo" required="true" requiredMessage="Seleccione una opcion"
+                                      value="#{personaBean.usuario.tipoUser}" >
                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                         <f:selectItem itemLabel="Administrador" itemValue="ADMIN" />
                         <f:selectItem itemLabel="Solicitante" itemValue="SOLI" />
                         <f:selectItem itemLabel="Titulado" itemValue="TITU" />
                     </p:selectOneMenu> 
-                    <p:outputLabel  value="Nombre Usuario" />
-                    <p:inputText value="#{personaBean.usuario.nombUser}" />
-                   
-                    <p:outputLabel  value="Clave" />
-                    <p:password id="clave1" value="#{personaBean.usuario.passUser}" 
-                                feedback="true" match="clave2" placeholder="Ingrese la clave"/>
-                    
-                    <p:outputLabel  value="Repita la Clave" />
-                    <p:password id="clave2" value="#{personaBean.usuario.passUser}" />
+                    <p:message for="txtTipo" display="icon"/>
+
+                    <p:outputLabel for="txtUsuario" value="Nombre Usuario" />
+                    <p:inputText id="txtUsuario" value="#{personaBean.usuario.nombUser}" 
+                                 required="true" requiredMessage="Campo requerido" >
+                           <p:clientValidator />
+                     </p:inputText>
+                    <p:message for="txtUsuario" display="icon"/>
                   
+                    <p:outputLabel for="txtClave" value="Clave" />
+                    <p:password id="txtClave" value="#{personaBean.usuario.passUser}" 
+                                feedback="true" match="txtClave2" required="true" 
+                                requiredMessage="Campo requerido">
+                    <p:clientValidator />
+                    </p:password>
+                    <p:message for="txtClave" display="icon"/>
+
+                    <p:outputLabel for="txtClave2" value="Repita la Clave" />
+                    <p:password id="txtClave2" value="#{personaBean.usuario.passUser}"
+                                required="true" 
+                                requiredMessage="Campo requerido">
+                    </p:password>
+                    <p:message for="txtClave2" display="icon"/>
+
               </h:panelGrid>
             </p:fieldset>
-                <h:panelGrid columns="4" cellpadding="5">
+                <h:panelGrid columns="5" cellpadding="5">
                     <p:commandButton value="#{personaBean.accion}" oncomplete="PF('wgdatos').hide();"
                                      update=":listdatos:datosper"
-                                     actionListener="#{personaBean.operar()}" style="margin-right:20px;" />
+                                     actionListener="#{personaBean.operar()}"
+                                     validateClient="true" ajax="false" style="margin-right:20px;" />
                     <p:commandButton  value="Cancelar" oncomplete="PF('wgdatos').hide();"
                                       update=":listdatos:datosper" style="margin-right:20px;" />
                 </h:panelGrid>       

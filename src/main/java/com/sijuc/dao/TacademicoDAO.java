@@ -3,6 +3,7 @@ package com.sijuc.dao;
 import com.sijuc.model.Folio;
 import com.sijuc.model.Persona;
 import com.sijuc.model.Tacademico;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +14,11 @@ import java.util.List;
 public class TacademicoDAO extends DAO{
         
     public void registrar(Persona per, Tacademico academ) throws Exception{
+        Connection cn = DAO.getConnection();
+
         try {
-            this.Conectar();
-            this.getCn().setAutoCommit(false);
+            //this.Conectar();
+            cn.setAutoCommit(false);
             
             PreparedStatement st;
             st = this.getCn().prepareStatement("INSERT INTO Persona (nombPe,apellPe,ciPe,feNacPe,edadPe,luNacPe) VALUES (?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
@@ -86,10 +89,10 @@ public class TacademicoDAO extends DAO{
     public List<Persona> listar() throws Exception{
         List<Persona> lista;
         ResultSet rs;
-        try {
-            this.Conectar();
-           // PreparedStatement st = this.getCn().prepareCall("SELECT * FROM modeldb.Persona");
-           PreparedStatement stm = this.getCn().prepareStatement("select * from Persona");
+        Connection cn = DAO.getConnection();
+       try {
+            //this.Conectar();
+           PreparedStatement stm = cn.prepareStatement("select * from Persona");
            rs = stm.executeQuery();
             lista = new ArrayList();
             while(rs.next()){
@@ -114,9 +117,10 @@ public class TacademicoDAO extends DAO{
     public Persona leerID(Persona per) throws Exception{
         Persona pers = null;
         ResultSet rs;
-    try {
-            this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("select * from Persona where idPe = ?");
+        Connection cn = DAO.getConnection();
+        try {
+            //this.Conectar();
+            PreparedStatement st = cn.prepareStatement("select * from Persona where idPe = ?");
             st.setInt(1, per.getIdPe());
             rs = st.executeQuery();
             while (rs.next()){
@@ -139,9 +143,10 @@ public class TacademicoDAO extends DAO{
         return pers;
     }
     public void modificar(Persona per) throws Exception{
+         Connection cn = DAO.getConnection();
         try {
-            this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("UPDATE Persona SET nombPe = ?, apellPe = ?, ciPe = ?, feNacPe = ?,edadPe = ?, luNacPe = ? WHERE idPe = ?");
+            //this.Conectar();
+            PreparedStatement st = cn.prepareStatement("UPDATE Persona SET nombPe = ?, apellPe = ?, ciPe = ?, feNacPe = ?,edadPe = ?, luNacPe = ? WHERE idPe = ?");
             st.setString(1, per.getNombPe());
             st.setString(2, per.getApellPe());
             st.setString(3, per.getCiPe());
@@ -157,9 +162,10 @@ public class TacademicoDAO extends DAO{
         }
     }
     public void eliminar(Persona per) throws Exception{
-        try {
-            this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("DELETE FROM Persona WHERE idPe = ?");
+       Connection cn = DAO.getConnection();
+       try {
+            //this.Conectar();
+            PreparedStatement st = cn.prepareStatement("DELETE FROM Persona WHERE idPe = ?");
             st.setInt(1, per.getIdPe());
             st.executeUpdate();
         } catch (Exception e) {

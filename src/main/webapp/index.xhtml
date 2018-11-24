@@ -5,31 +5,90 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
-    <h:head>
-        <title>Registra Persona</title>
-    </h:head>
 
+    <h:head>
+        <title>Verifique su Titulo</title>
+    </h:head>
+    <style type="text/css">
+        .ui-panel, div.ui-state-hover {
+            margin: 10px;
+            width:600px;
+            align: center;
+        }
+
+        .ui-dashboard-column {
+            width:220px;
+        }
+    </style>
     <h:body>
-                Pagina principal
-        <div id="top">
+
+        <div id="top" align="right">
             <ui:insert name="top">
-                <h:form>
-                    <p:graphicImage   height="400" width="1550" name="/images/banner-unsxx.jpg" />
+               <p:graphicImage   height="150" width="1560" name="/images/banner-unsxx.jpg" />
+                <h:form id="formlogin">   
+                    <p:commandButton value="Personal Autorizado" onclick="PF('dlg').show();" action="principal.xhtml?faces-redirect=true"/>
+
+                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+                    <p:dialog header="Login" widgetVar="dlg" resizable="false" id="dlglog" modal="true">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="username" value="Usuario:" />
+                            <p:inputText id="username" value="#{usuarioBean.nombUser}" required="true" label="username" autocomplete="off" />
+
+                            <h:outputLabel for="password" value="Clave:" />
+                            <p:password id="password" value="#{usuarioBean.passUser}" required="true" label="password" />
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Ingresar" update="growl" action="#{usuarioBean.validarcuenta()}"
+                                                 oncomplete="dlglog" />
+                                <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" />
+                            </f:facet>  
+                        </h:panelGrid>
+                    </p:dialog>
                 </h:form>
             </ui:insert>
         </div>
-
-        <div id="content" class="center_content">
+        <p:separator></p:separator>
+        <div id="content" class="center_content" align="center" >
             <ui:insert name="content">
-                <p:commandLink value="Ir al pagina" action="principal.xhtml?faces-redirect=true"/>
+                <h:form>    
+                    <p:panel id="basic" header="VERIFICACION DE TITULOS UNIVERSITARIOS" footer="Los datos proporcionados estan protegidos" style="margin-bottom:30px">
+                        <h:panelGrid columns="3" cellpadding="8">
+                            <p:graphicImage name="/images/unsxx.jpeg" width="60" height="70"/>
+                            <h:outputText
+                                value="Por medio de este servicio Usted puede Verificar la autenticidad de los titulos emitido
+                                por la Universidad Nacional Siglo XX. Para ello,introduzca el número de Titulo que se encuentra
+                                situado en el titulo y el Nro. de Carnet de Identidad (CI) del Poseedor." />
+                        </h:panelGrid>
+                        <p:separator/>
+                        <h:panelGrid columns="3" >
+                            <h:outputLabel for="nrotitulo" value="Nro. Titulo:" />
+                            <p:password id="nrotitulo" autocomplete="off" 
+                                         required="true" requiredMessage="Campo requerido" >
+                                <p:clientValidator/>              
+                            </p:password>
+                            <p:message for="nrotitulo" display="icon"/>
+                            
+                            <h:outputLabel for="nroci" value="Nro. C.I.:" />
+                            <p:password id="nroci" label="password" 
+                                        required="true" requiredMessage="Campo requerido">
+                                <p:clientValidator/>
+                            </p:password>
+                            <p:message for="nroci" display="icon"/>
+
+                            <p:commandButton value="Verificar" validateClient="true" ajax="false" />
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+
             </ui:insert>
         </div>
-
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+        <p:separator></p:separator>
+        <div id="bottom" align="center" style="color:#FFBBGG;">
+            <ui:insert name="bottom">
+                <p:outputLabel value="SoftService-unsxx, Copyright © 2018 Todos los derechos reservados."/><br/>
+            <p:graphicImage name="/images/sistema.jpg" width="850" height="70"/>
+            </ui:insert>
         </div>
-
-                
     </h:body>
 </html>

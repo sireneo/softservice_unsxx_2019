@@ -61,12 +61,12 @@
                 <h:panelGrid columns="4" cellpadding="5">
                     <p:outputLabel for="nombre" value="Nombres"/>
                     <p:inputText id="nombre" required="true" 
-                                 value="#{tacademicoBean.persona.nombPe}" >
+                                 value="#{tacademicoBean.persona.nombPe}" style="text-transform: uppercase" >
                         <f:validateLength minimum="2"/>
                     </p:inputText>
                     
                     <p:outputLabel value="Apellidos" />
-                    <p:inputText value="#{tacademicoBean.persona.apellPe}" />
+                    <p:inputText value="#{tacademicoBean.persona.apellPe}" style="text-transform: uppercase" />
 
                     <p:outputLabel value="CI" />
                     <p:inputText value="#{tacademicoBean.persona.ciPe}" />
@@ -78,14 +78,14 @@
                     <p:inputText  value="#{tacademicoBean.persona.edadPe}" />
 
                     <p:outputLabel  value="Lugar de Nacimiento" />
-                    <p:inputText value="#{tacademicoBean.persona.luNacPe}" />
+                    <p:inputText value="#{tacademicoBean.persona.luNacPe}" style="text-transform: uppercase" />
                 </h:panelGrid>
                 </p:fieldset>
                 
                 <p:fieldset legend="Datos Titulo" style="margin-bottom:20px">
                 <h:panelGrid columns="4" cellpadding="5">
                     <p:outputLabel  value="Nombre del Titulo" />
-                    <p:inputText value="#{tacademicoBean.academico.nombTac}" />
+                    <p:inputText value="#{tacademicoBean.academico.nombTac}" style="text-transform: uppercase" />
                    
                     <p:outputLabel  value="Fecha" />
                     <p:inputText value="#{tacademicoBean.academico.fechaTac}" />

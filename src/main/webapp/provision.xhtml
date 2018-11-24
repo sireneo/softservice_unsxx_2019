@@ -22,22 +22,29 @@
                 <p:column headerText="Nombres" filterBy="#{provi.nombPe}" filterMatchMode="contains">
                     <p:outputLabel value="#{provi.nombPe}"  />
                 </p:column>
-                <p:column headerText="Nombres" filterBy="#{provi.apellPe}" filterMatchMode="contains">
+                <p:column headerText="Apellidos" filterBy="#{provi.apellPe}" filterMatchMode="contains">
                     <p:outputLabel value="#{provi.apellPe}"  />
                 </p:column>
                 
                 <p:column headerText="CI" filterBy="#{provi.ciPe}" filterMatchMode="contains">
                     <p:outputLabel value="#{provi.ciPe}" />
                 </p:column>
-                <p:column headerText="Fecha" filterBy="#{provi.provis.fechaProv}" filterMatchMode="exact">
+                <p:column headerText="Fecha Emision" filterBy="#{provi.provis.fechaProv}" filterMatchMode="exact">
                     <p:outputLabel value="#{provi.provis.fechaProv}"/>
                 </p:column>
-                <p:column headerText="Nombre" filterBy="#{provi.provis.nombProv}" filterMatchMode="contains">
+                <p:column headerText="Nombre del Titulo" filterBy="#{provi.provis.nombProv}" filterMatchMode="contains">
                     <p:outputLabel value="#{provi.provis.nombProv}" />
                 </p:column>
-                <p:column headerText="Nro de Titulo" filterBy="#{provi.provis.nroProv}" filterMatchMode="contains">
+                <p:column headerText="Nro Carton" filterBy="#{provi.provis.nroProv}" filterMatchMode="contains">
                     <p:outputLabel value="#{provi.provis.nroProv}" />
+                </p:column>
+                <p:column headerText="Fecha Recojo" filterBy="#{provi.provis.folio.fechaExpe}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.provis.folio.fechaExpe}" />
                 </p:column>                
+                <p:column headerText="Nro. de Titulo" filterBy="#{provi.provis.folio.nroExpe}" filterMatchMode="contains">
+                    <p:outputLabel value="#{provi.provis.folio.nroExpe}" />
+                </p:column>                
+                                
                 <p:column headerText="Modificar">
                      <p:commandButton  value="Modificiar" oncomplete="PF('wgdatos').show();"
                          update=":dlg" style="margin-right:20px;"
@@ -59,12 +66,12 @@
                 <h:panelGrid columns="4" cellpadding="5">
                     <p:outputLabel for="nombre" value="Nombres"/>
                     <p:inputText id="nombre" required="true" 
-                                 value="#{tprovisionBean.persona.nombPe}" >
+                                 value="#{tprovisionBean.persona.nombPe}" style="text-transform: uppercase" >
                         <f:validateLength minimum="2"/>
                     </p:inputText>
                     
                     <p:outputLabel value="Apellidos" />
-                    <p:inputText value="#{tprovisionBean.persona.apellPe}" />
+                    <p:inputText value="#{tprovisionBean.persona.apellPe}" style="text-transform: uppercase"/>
 
                     <p:outputLabel value="CI" />
                     <p:inputText value="#{tprovisionBean.persona.ciPe}" />
@@ -76,14 +83,14 @@
                     <p:inputText  value="#{tprovisionBean.persona.edadPe}" />
 
                     <p:outputLabel  value="Lugar de Nacimiento" />
-                    <p:inputText value="#{tprovisionBean.persona.luNacPe}" />
+                    <p:inputText value="#{tprovisionBean.persona.luNacPe}" style="text-transform: uppercase" />
                 </h:panelGrid>
                 </p:fieldset>
                 
                 <p:fieldset legend="Datos Titulo" style="margin-bottom:20px">
                 <h:panelGrid columns="4" cellpadding="5">
                     <p:outputLabel  value="Nombre del Titulo" />
-                    <p:inputText value="#{tprovisionBean.provision.nombProv}" />
+                    <p:inputText value="#{tprovisionBean.provision.nombProv}" style="text-transform: uppercase" />
                    
                     <p:outputLabel  value="Fecha" />
                     <p:inputText value="#{tprovisionBean.provision.fechaProv}" />

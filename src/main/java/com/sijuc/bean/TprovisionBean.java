@@ -130,7 +130,7 @@ public class TprovisionBean {
         this.folio.setNroLibro(0);
         this.folio.setNroExpe(0);
         this.folio.setFechaExpe("");
-        this.folio.setIdProv(persona);
+        this.folio.setIdProv(provision);
     }
     
     //registrando datos al persona provison y folio

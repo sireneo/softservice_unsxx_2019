@@ -12,9 +12,11 @@
         <h:outputStylesheet name="./css/cssLayout.css"/>-->
         <title>VERIFICACION DE TITULOS</title>
     </h:head>
-
     <h:body>
-
+   <p:idleMonitor timeout="30000" >
+        <p:ajax event="idle" listener="#{usuarioBean.timeout()}" oncomplete="alert('Session Finalizada...')"/>
+    </p:idleMonitor>
+   
         <div id="top">
             <ui:insert name="top">
                 <h:form>  

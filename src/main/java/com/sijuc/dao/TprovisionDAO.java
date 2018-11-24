@@ -5,6 +5,7 @@ import com.sijuc.model.Persona;
 import com.sijuc.model.Tprovision;
 import com.sijuc.model.Usuario;
 import java.sql.Array;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,12 +16,14 @@ import java.util.List;
 public class TprovisionDAO extends DAO{
         
     public void registrar(Persona per, Tprovision prov, Folio fol) throws Exception{
+        Connection cn = DAO.getConnection();
+
         try {
-            this.Conectar();
-            this.getCn().setAutoCommit(false);
+            
+            cn.setAutoCommit(false);
             
             PreparedStatement st;
-            st = this.getCn().prepareStatement("INSERT INTO Persona (nombPe,apellPe,ciPe,feNacPe,edadPe,luNacPe) VALUES (?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            st = cn.prepareStatement("INSERT INTO Persona (nombPe,apellPe,ciPe,feNacPe,edadPe,luNacPe) VALUES (?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
             st.setString(1, per.getNombPe());
             st.setString(2, per.getApellPe());
             st.setString(3, per.getCiPe());
@@ -38,7 +41,7 @@ public class TprovisionDAO extends DAO{
              st.close();
           
             PreparedStatement st2;
-            st2 = this.getCn().prepareStatement("INSERT INTO Tprovision (nombProv, fechaProv, nroProv, idPe) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            st2 = cn.prepareStatement("INSERT INTO Tprovision (nombProv, fechaProv, nroProv, idPe) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             st2.setString(1, prov.getNombProv());
             st2.setString(2, prov.getFechaProv());
             st2.setInt(3, prov.getNroProv());
@@ -49,9 +52,9 @@ public class TprovisionDAO extends DAO{
             int idFoli = 0;
             if (generaKeys.next()) { 
                  idFoli = generaKeys.getInt(1);
-                System.out.println("Clave generada = " + idFoli);
+                //System.out.println("Clave generada = " + idFoli);
             }
-           PreparedStatement st3 = this.getCn().prepareStatement("INSERT INTO Folio (nroFolio, nroLibro, nroExpe, fechaExpe, idProv) VALUES (?,?,?,?,?)");
+           PreparedStatement st3 = cn.prepareStatement("INSERT INTO Folio (nroFolio, nroLibro, nroExpe, fechaExpe, idProv) VALUES (?,?,?,?,?)");
             st3.setInt(1, fol.getNroFolio());
             st3.setInt(2, fol.getNroLibro());
             st3.setInt(3, fol.getNroExpe());
@@ -61,10 +64,10 @@ public class TprovisionDAO extends DAO{
             
             st3.close();
                       
-            this.getCn().commit();
+            cn.commit();
             
         } catch (Exception e) {
-            this.getCn().rollback();
+            cn.rollback();
             throw e;
             
         }finally{
@@ -74,9 +77,10 @@ public class TprovisionDAO extends DAO{
     public List<Persona> listar() throws Exception{
         List<Persona> lista;
         ResultSet rs;
+         Connection cn = DAO.getConnection();
         try {
-            this.Conectar();
-           PreparedStatement stm = this.getCn().prepareStatement("select nombPe, apellPe, ciPe, tp.idProv, tp.nombProv, tp.nroProv, tp.fechaProv from Persona join Tprovision as tp on Persona.idPe=tp.idPe");
+           // this.Conectar();
+           PreparedStatement stm = cn.prepareStatement("select nombPe, apellPe, ciPe, tp.idProv, tp.nombProv, tp.nroProv, tp.fechaProv from Persona join Tprovision as tp on Persona.idPe=tp.idPe");
            rs = stm.executeQuery();
             lista = new ArrayList();
             
@@ -95,7 +99,7 @@ public class TprovisionDAO extends DAO{
             }
             rs.close();
         } catch (Exception e) {
-           this.getCn().rollback();
+           cn.rollback();
            throw e;
             
         }finally{
@@ -110,9 +114,10 @@ public class TprovisionDAO extends DAO{
     public Persona leerID(Persona per) throws Exception{
         Persona pers = null;
         ResultSet rs;
-    try {
-            this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("select * from Persona where idPe = ?");
+        Connection cn = DAO.getConnection();
+       try {
+            //this.Conectar();
+            PreparedStatement st = cn.prepareStatement("select * from Persona where idPe = ?");
             st.setInt(1, per.getIdPe());
             rs = st.executeQuery();
             while (rs.next()){
@@ -135,9 +140,10 @@ public class TprovisionDAO extends DAO{
         return pers;
     }
     public void modificar(Persona per) throws Exception{
+           Connection cn = DAO.getConnection();
         try {
-            this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("UPDATE Persona SET nombPe = ?, apellPe = ?, ciPe = ?, feNacPe = ?,edadPe = ?, luNacPe = ? WHERE idPe = ?");
+           // this.Conectar();
+            PreparedStatement st = cn.prepareStatement("UPDATE Persona SET nombPe = ?, apellPe = ?, ciPe = ?, feNacPe = ?,edadPe = ?, luNacPe = ? WHERE idPe = ?");
             st.setString(1, per.getNombPe());
             st.setString(2, per.getApellPe());
             st.setString(3, per.getCiPe());
@@ -153,9 +159,10 @@ public class TprovisionDAO extends DAO{
         }
     }
     public void eliminar(Persona per) throws Exception{
-        try {
-            this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("DELETE FROM Persona WHERE idPe = ?");
+         Connection cn = DAO.getConnection();
+       try {
+            //this.Conectar();
+            PreparedStatement st = cn.prepareStatement("DELETE FROM Persona WHERE idPe = ?");
             st.setInt(1, per.getIdPe());
             st.executeUpdate();
         } catch (Exception e) {

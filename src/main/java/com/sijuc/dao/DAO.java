@@ -15,6 +15,7 @@ public class DAO {
     public void setCn(Connection cn) {
         this.cn = cn;
     }
+    /**
     public void Conectar () throws Exception{
         try {
             Class.forName("org.mariadb.jdbc.Driver");
@@ -25,6 +26,16 @@ public class DAO {
             throw e;
 
         }   
+    }**/
+    public static Connection getConnection() {
+	try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/modeldb", "root", "jehova");
+            return con;
+	} catch (Exception ex) {
+            System.out.println("Database.getConnection() Error -->"+ ex.getMessage());
+            return null;
+	}
     }
     public void Cerrar() throws Exception{
         try {
