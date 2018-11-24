@@ -137,6 +137,7 @@ public class PersonaBean implements Serializable{
             throw e;
         }
     }
+    //lista de persona, titulo rpovison, y folio
     public void listarprov() throws Exception{
         PersonaDAO dao;
         try {
@@ -146,7 +147,16 @@ public class PersonaBean implements Serializable{
             throw e;
         }
     }
-    
+    //lista verificacion de titulos
+        public void verificar() throws Exception{
+        PersonaDAO dao;
+        try {
+            dao = new PersonaDAO();
+            lstpersona = dao.verificartitulo(persona);
+          } catch (Exception e) {
+            throw e;
+        }
+    }
     public void leerID(Persona per) throws Exception{
         PersonaDAO dao;
         Persona temp;

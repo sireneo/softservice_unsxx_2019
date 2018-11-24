@@ -5,6 +5,7 @@ public class Usuario {
     private String passUser;
     private String tipoUser;
     private Persona idPe;
+    private Persona persona;
 
     @Override
     public String toString() {

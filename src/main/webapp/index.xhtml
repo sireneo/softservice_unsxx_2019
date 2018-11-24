@@ -64,19 +64,19 @@
                         <h:panelGrid columns="3" >
                             <h:outputLabel for="nrotitulo" value="Nro. Titulo:" />
                             <p:password id="nrotitulo" autocomplete="off" 
-                                         required="true" requiredMessage="Campo requerido" >
+                                        required="true" value="#{personaBean.persona.provis.folio.nroExpe}" requiredMessage="Campo requerido" >
                                 <p:clientValidator/>              
                             </p:password>
                             <p:message for="nrotitulo" display="icon"/>
                             
                             <h:outputLabel for="nroci" value="Nro. C.I.:" />
                             <p:password id="nroci" label="password" 
-                                        required="true" requiredMessage="Campo requerido">
+                                        required="true" value="#{personaBean.persona.ciPe}" requiredMessage="Campo requerido">
                                 <p:clientValidator/>
                             </p:password>
                             <p:message for="nroci" display="icon"/>
 
-                            <p:commandButton value="Verificar" validateClient="true" ajax="false" />
+                            <p:commandButton value="Verificar" actionListener="#{personaBean.verificar()}" validateClient="true" ajax="false" />
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
