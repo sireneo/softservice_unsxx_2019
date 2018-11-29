@@ -18,7 +18,7 @@ public class PersonaBean implements Serializable{
 
     private Persona persona = new Persona();
     private Usuario usuario = new Usuario();
-    
+
     private  List<Persona> lstpersona;
     private List<Persona> leerID;
     private List<Tprovision> lstprovision;
@@ -104,6 +104,8 @@ public class PersonaBean implements Serializable{
         this.usuario.setPassUser("");
         this.usuario.setTipoUser("");
         this.usuario.setIdPe(persona);
+        this.persona.getProvis().getFolio().setNroExpe(0);
+        
      
     }
     private void registrar() throws Exception{
@@ -152,7 +154,7 @@ public class PersonaBean implements Serializable{
         PersonaDAO dao;
         try {
             dao = new PersonaDAO();
-            lstpersona = dao.verificartitulo(persona);
+            dao.verificartitulo(persona);
           } catch (Exception e) {
             throw e;
         }

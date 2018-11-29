@@ -179,9 +179,9 @@ public class PersonaDAO {
                 pe.getProvis().getFolio().setFechaExpe(rs.getString("fechaExpe"));
 
                 lista.add(pe);
-                System.out.print("nombres;" + rs.getString("nombPe"));
-                System.out.println("provis" + rs.getString("fechaProv"));
-                System.out.println("folio: " + rs.getString("fechaExpe"));
+                //System.out.print("nombres;" + rs.getString("nombPe"));
+                //System.out.println("provis" + rs.getString("fechaProv"));
+                //System.out.println("folio: " + rs.getString("fechaExpe"));
             }
             rs.close();
         } catch (Exception e) {
@@ -195,18 +195,18 @@ public class PersonaDAO {
     }
 
     //metodo para verificar si el titulo es veridico
-    public List<Persona> verificartitulo(Persona per) throws Exception {
-        List<Persona> lista;
+    public void verificartitulo(Persona per) throws Exception {
+        //List<Persona> lista;
         ResultSet rs;
         Connection cn = DAO.getConnection();
         try {
             //this.Conectar();
-            PreparedStatement stm = cn.prepareStatement("select nombPe, apellPe, ciPe, tp.nombProv, tp.fechaProv, fo.nroExpe from Persona join Tprovision as tp on Persona.idPe=tp.idPe join Folio as fo on tp.idProv=fo.idProv where Persona.ciPe=? and fo.nroExpe=?");
+            PreparedStatement stm = cn.prepareStatement("select nombPe, apellPe, ciPe, tp.nombProv, tp.fechaProv, fo.nroExpe from Persona join Tprovision as tp on Persona.idPe=tp.idPe join Folio as fo on tp.idProv=fo.idProv where fo.nroExpe = ?");
             stm.setInt(1, per.getProvis().getFolio().getNroExpe());
-            stm.setString(2, per.getCiPe());
+            //stm.setString(2, per.getCiPe());
             rs = stm.executeQuery();
 
-            lista = new ArrayList();
+          //  lista = new ArrayList();
             if (rs.next()) {
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -220,10 +220,14 @@ public class PersonaDAO {
                    
                     pe.getProvis().getFolio().setNroExpe(rs.getInt("nroExpe"));
                    
-                    lista.add(pe);
+            //        lista.add(pe);
                     //System.out.print("nombres;" + rs.getString("nombPe"));
                     //System.out.println("provis" + rs.getString("fechaProv"));
                     System.out.println("folio: " + rs.getString("nroExpe"));
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Titulo Verifcado", "Nombres: "
+                                             + rs.getString("nombPe")+" "+rs.getString("apellPe")+"<br/>Titulo: "+rs.getString("nombProv")
+                                              + "<br/>Nro.: "+rs.getInt("nroExpe")+"  Fecha Emision: "+rs.getString("fechaProv")));
+
                 }
                 rs.close();
                 
@@ -237,7 +241,7 @@ public class PersonaDAO {
         } finally {
             cn.close();
         }
-        return lista;
+        //return lista;
     }
 
 }

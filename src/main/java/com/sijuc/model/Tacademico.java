@@ -1,6 +1,8 @@
 package com.sijuc.model;
 
-public class Tacademico {
+import java.io.Serializable;
+
+public class Tacademico implements Serializable{
     private int idTac;
     private String nombTac;
     private String fechaTac;

@@ -20,6 +20,7 @@
             width:220px;
         }
     </style>
+    <f:event listener="#{personaBean.limpiar()}" type="preRenderView" />
     <h:body>
 
         <div id="top" align="right">
@@ -27,9 +28,7 @@
                <p:graphicImage   height="150" width="1560" name="/images/banner-unsxx.jpg" />
                 <h:form id="formlogin">   
                     <p:commandButton value="Personal Autorizado" onclick="PF('dlg').show();" action="principal.xhtml?faces-redirect=true"/>
-
                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
                     <p:dialog header="Login" widgetVar="dlg" resizable="false" id="dlglog" modal="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="Usuario:" />
@@ -57,30 +56,21 @@
                             <p:graphicImage name="/images/unsxx.jpeg" width="60" height="70"/>
                             <h:outputText
                                 value="Por medio de este servicio Usted puede Verificar la autenticidad de los titulos emitido
-                                por la Universidad Nacional Siglo XX. Para ello,introduzca el número de Titulo que se encuentra
-                                situado en el titulo y el Nro. de Carnet de Identidad (CI) del Poseedor." />
+                                por la UNSXX. Para ello,introduzca el número de Titulo que se encuentra
+                                situado en el titulo" />
                         </h:panelGrid>
                         <p:separator/>
                         <h:panelGrid columns="3" >
                             <h:outputLabel for="nrotitulo" value="Nro. Titulo:" />
-                            <p:password id="nrotitulo" autocomplete="off" 
+                            <p:inputText id="nrotitulo" 
                                         required="true" value="#{personaBean.persona.provis.folio.nroExpe}" requiredMessage="Campo requerido" >
-                                <p:clientValidator/>              
-                            </p:password>
+                            </p:inputText>
                             <p:message for="nrotitulo" display="icon"/>
-                            
-                            <h:outputLabel for="nroci" value="Nro. C.I.:" />
-                            <p:password id="nroci" label="password" 
-                                        required="true" value="#{personaBean.persona.ciPe}" requiredMessage="Campo requerido">
-                                <p:clientValidator/>
-                            </p:password>
-                            <p:message for="nroci" display="icon"/>
-
                             <p:commandButton value="Verificar" actionListener="#{personaBean.verificar()}" validateClient="true" ajax="false" />
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
-
+                
             </ui:insert>
         </div>
         <p:separator></p:separator>

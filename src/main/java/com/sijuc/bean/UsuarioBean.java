@@ -23,10 +23,10 @@ import com.sijuc.bean.SessionUtils;
 @SessionScoped
 public class UsuarioBean implements Serializable {
 
-    private Usuario  usuario = new Usuario();
+    //private Usuario  usuario = new Usuario();
     private String nombUser;
     private String passUser;
-    //private HttpSession SessionUtils;
+    private HttpSession SessionUtils;
 
     public String getNombUser() {
         return nombUser;
@@ -53,7 +53,7 @@ public class UsuarioBean implements Serializable {
         boolean valid;
         valid = UsuarioDAO.validate(nombUser, passUser);
 	if (valid) {
-            HttpSession session = SessionUtils.getSession();
+           // HttpSession session = SessionUtils.getSession();
                 return "principal";
         } else {
             FacesContext.getCurrentInstance().addMessage(
