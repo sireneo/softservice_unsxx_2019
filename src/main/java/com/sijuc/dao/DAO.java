@@ -19,7 +19,7 @@ public class DAO {
       public static Connection getConnection() { 
           try {
                 Class.forName("org.mariadb.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/modeldb","root", "jehova");
+                Connection con = DriverManager.getConnection("jdbc:mariadb://h7xe2knj2qb6kxal.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xomhmx9n32253lbc","w4ikmq88ekxwwusb", "p5ujwra3wfiss1c4");
                 return con;
           } catch (Exception ex) {
                  System.out.println("Database.getConnection() Error -->"+ ex.getMessage());
