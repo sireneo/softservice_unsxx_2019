@@ -9,7 +9,8 @@
     <h:head>
         <title>Verifique su Titulo</title>
     </h:head>
-    <style type="text/css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+   <style type="text/css">
         .ui-panel, div.ui-state-hover {
             margin: 10px;
             width:600px;
@@ -27,7 +28,8 @@
             <ui:insert name="top">
                <p:graphicImage   height="150" width="1560" name="/images/banner-unsxx.jpg" />
                 <h:form id="formlogin">   
-                    <p:commandButton value="Personal Autorizado" onclick="PF('dlg').show();" action="principal.xhtml?faces-redirect=true"/>
+                    <p:commandButton value="Personal Autorizado" onclick="PF('dlg').show();" 
+                                     action="principal.xhtml?faces-redirect=true" style="background-color: #c2dfef"/>
                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
                     <p:dialog header="Login" widgetVar="dlg" resizable="false" id="dlglog" modal="true">
                         <h:panelGrid columns="2" cellpadding="5">
@@ -40,8 +42,7 @@
                             <f:facet name="footer">
                                 <p:commandButton value="Ingresar" update="growl" action="#{usuarioBean.validarcuenta()}"
                                                  oncomplete="dlglog" />
-                                <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" />
-                            </f:facet>  
+                                <p:commandButton resetValues="true" process="@this" value="Cancelar" update="dlglog" onclick="PF('dlg').hide();" />                           </f:facet>  
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -53,7 +54,7 @@
                 <h:form>    
                     <p:panel id="basic" header="VERIFICACION DE TITULOS UNIVERSITARIOS" footer="Los datos proporcionados estan protegidos" style="margin-bottom:30px">
                         <h:panelGrid columns="3" cellpadding="8">
-                            <p:graphicImage name="/images/unsxx.jpeg" width="60" height="70"/>
+                            <p:graphicImage name="/images/unsxx.jpeg" width="45" height=""/>
                             <h:outputText
                                 value="Por medio de este servicio Usted puede Verificar la autenticidad de los titulos emitido
                                 por la UNSXX. Para ello,introduzca el número de Titulo que se encuentra
@@ -66,7 +67,9 @@
                                         required="true" value="#{personaBean.persona.provis.folio.nroExpe}" requiredMessage="Campo requerido" >
                             </p:inputText>
                             <p:message for="nrotitulo" display="icon"/>
-                            <p:commandButton value="Verificar" actionListener="#{personaBean.verificar()}" validateClient="true" ajax="false" />
+                            <div class="g-recaptcha" data-sitekey="6LcC1H4UAAAAAPSDhfSsA2xepV4hYWmTlyJez3Hp"></div>
+
+                            <p:commandButton resetValues="true" process="@this" value="Verificar" actionListener="#{personaBean.verificar()}" validateClient="true" ajax="false" />
                         </h:panelGrid>
                     </p:panel>
                 </h:form>

@@ -15,16 +15,14 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean 
 @ViewScoped
-public class TprovisionBean {
-   // private static final long serialVersionUID = 8799656478674716638L;
-
+public class TprovisionBean implements Serializable{
+   
     private Persona persona = new Persona();
     private Usuario usuario = new Usuario();
     private Tprovision provision = new Tprovision();
     private Folio folio = new Folio();
     
     private  List<Persona> lstpersona;
-    private List<Persona> leerID;
     private List<Tprovision> lstprovision;
 
     public List<Tprovision> getLstprovision() {
@@ -58,9 +56,7 @@ public class TprovisionBean {
     public void setFolio(Folio folio) {
         this.folio = folio;
     }
-    
-        
-    
+   
     //mejora la presentacion de navegacion de los botones
     private String accion;
     
@@ -73,14 +69,6 @@ public class TprovisionBean {
         this.accion = accion;
     }
     
-    public List<Persona> getLeerID() {
-        return leerID;
-    }
-
-    public void setLeerID(List<Persona> leerID) {
-        this.leerID = leerID;
-    }
-
     public List<Persona> getLstpersona() {
         return lstpersona;
     }
@@ -104,7 +92,7 @@ public class TprovisionBean {
                 this.limpiar();
             break;
             case "Modificar":
-                this.modificar();
+                //this.modificar();
                 this.limpiar();
             break;
         }
@@ -119,6 +107,7 @@ public class TprovisionBean {
         this.persona.setFeNacPe("");
         this.persona.setEdadPe(0);
         this.persona.setLuNacPe("");
+        this.persona.setUnivPe("");
         
         this.provision.setIdProv(0);
         this.provision.setFechaProv("");
@@ -139,57 +128,9 @@ public class TprovisionBean {
         try {
             dao = new TprovisionDAO();
             dao.registrar(persona, provision, folio);
-         //   this.listar();
+            
         } catch (Exception e) {
             throw e;
         }
     }
-    
-    private void modificar() throws Exception{
-        PersonaDAO dao;
-        try {
-            dao = new PersonaDAO();
-            dao.modificar(persona);
-            //this.listar();
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-    
-    /*public void listar() throws Exception{
-        PersonaDAO dao;
-        try {
-            dao = new PersonaDAO();
-            lstprovision = dao.listaprov();
-          } catch (Exception e) {
-            throw e;
-        }
-    }
-    */
-    public void leerID(Persona per) throws Exception{
-        PersonaDAO dao;
-        Persona temp;
-        try {
-            dao = new PersonaDAO();
-            temp = dao.leerID(per);
-            if (temp != null){
-                this.persona =  temp;
-                this.accion = "Modificar";
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-    
-    public void eliminar(Persona per) throws Exception{
-        PersonaDAO dao;
-        try {
-            dao = new PersonaDAO();
-            dao.eliminar(per);
-          //  this.listar();
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-    //constructor
 }

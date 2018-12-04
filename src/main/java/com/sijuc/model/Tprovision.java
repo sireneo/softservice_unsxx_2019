@@ -7,10 +7,21 @@ public class Tprovision implements Serializable{
     private String nombProv;
     private String fechaProv;
     private int nroProv;
+    private String tipoDoc;
     private Persona idPe;
     private Persona person;
     private Folio folio = new Folio();
 
+    public String getTipoDoc() {
+        return tipoDoc;
+    }
+
+    public void setTipoDoc(String tipoDoc) {
+        this.tipoDoc = tipoDoc;
+    }
+
+    
+    
     public Folio getFolio() {
         return folio;
     }

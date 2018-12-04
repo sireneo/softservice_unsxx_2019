@@ -10,6 +10,18 @@ public class Persona implements Serializable{
     private String feNacPe;
     private int edadPe;
     private String luNacPe;
+    private String univPe;
+    private Usuario user = new Usuario();
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+    
+    
     ///por relacion de tablas y clases 
     private Tprovision provis = new Tprovision();
 
@@ -107,6 +119,12 @@ public class Persona implements Serializable{
     public void setLuNacPe(String luNacPe) {
         this.luNacPe = luNacPe;
     }
-    
-    
+    public String getUnivPe() {
+        return univPe;
+    }
+
+    public void setUnivPe(String univPe) {
+        this.univPe = univPe;
+    }
+   
 }

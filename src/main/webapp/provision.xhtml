@@ -12,13 +12,19 @@
                 <h:form id="listdatos">
                     <p:commandButton value="Nuevo Titulo" oncomplete="PF('wgdatos').show();"
                                      actionListener="#{tprovisionBean.setAccion('Registrar')}"
-                                     update=":dlg"/>
+                                     update=":dlg" style="background-color: #c2dfef"/>
 
                     <p:commandButton update="datosper" value="Listar Titulos" 
-                                     actionListener="#{personaBean.listarprov()}" style="margin-right:20px;" />
+                                     actionListener="#{personaBean.listarprov()}" 
+                                     style="background-color: #c2dfef"/>
                     <p:dataTable id="datosper" var="provi" value="#{personaBean.lstpersona}" style="margin-top:20px"
-                                 paginator="true" rows="5" paginatorPosition="bottom">
-
+                                 paginator="true" rows="7" paginatorPosition="bottom" widgetVar="wdgdatos">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Busqueda General:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('wdgdatos').filter()"  placeholder="Escriba una palabra"/>
+                            </p:outputPanel>
+                        </f:facet>
                         <p:column headerText="Nombres" filterBy="#{provi.nombPe}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.nombPe}"  />
                         </p:column>
@@ -38,68 +44,163 @@
                         <p:column headerText="Nro Carton" filterBy="#{provi.provis.nroProv}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.provis.nroProv}" />
                         </p:column>
+                        <p:column headerText="Titulo" filterBy="#{provi.provis.tipoDoc}" filterMatchMode="contains">
+                            <p:outputLabel value="#{provi.provis.tipoDoc}" />
+                        </p:column>
                         <p:column headerText="Fecha Recojo" filterBy="#{provi.provis.folio.fechaExpe}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.provis.folio.fechaExpe}" />
                         </p:column>                
                         <p:column headerText="Nro. de Titulo" filterBy="#{provi.provis.folio.nroExpe}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.provis.folio.nroExpe}" />
-                        </p:column>                
+                        </p:column>
+                        <p:column headerText="Universidad" filterBy="#{provi.univPe}" filterMatchMode="contains">
+                            <p:outputLabel value="#{provi.univPe}" />
+                        </p:column>
                     </p:dataTable>
                 </h:form>
-                <p:dialog id="dlg" header="Registrar Datos del Titulo Provision Nacional" widgetVar="wgdatos" 
+                <p:dialog id="dlg" header="Registrar Datos Titulo" widgetVar="wgdatos" 
                           showEffect="explode" hideEffect="explode" modal="true">
                     <h:form id="updatos">       
                         <p:fieldset legend="Datos Profesional" style="margin-bottom:20px">
-                            <h:panelGrid columns="4" cellpadding="5">
+                            <h:panelGrid columns="6" cellpadding="5">
                                 <p:outputLabel for="nombre" value="Nombres"/>
                                 <p:inputText id="nombre" required="true" 
-                                             value="#{tprovisionBean.persona.nombPe}" style="text-transform: uppercase" >
+                                             value="#{tprovisionBean.persona.nombPe}"
+                                             requiredMessage="Campo requerido" style="text-transform: uppercase" >
                                     <f:validateLength minimum="2"/>
+                                    <p:clientValidator/>
                                 </p:inputText>
+                                <p:message for="nombre" display="icon"/>
 
-                                <p:outputLabel value="Apellidos" />
-                                <p:inputText value="#{tprovisionBean.persona.apellPe}" style="text-transform: uppercase"/>
+                                <p:outputLabel for="apellido" value="Apellidos" />
+                                <p:inputText id="apellido" value="#{tprovisionBean.persona.apellPe}" 
+                                             required="true" requiredMessage="Campo requerido" style="text-transform: uppercase">
+                                    <f:validateLength minimum="2"/>
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="apellido" display="icon"/>
 
-                                <p:outputLabel value="CI" />
-                                <p:inputText value="#{tprovisionBean.persona.ciPe}" />
+                                <p:outputLabel for="ci" value="CI" />
+                                <p:inputText id="ci" value="#{tprovisionBean.persona.ciPe}"
+                                             required="true" requiredMessage="Campo requerido">
+                                    <f:validateLength minimum="5"/>
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="ci" display="icon"/>
 
-                                <p:outputLabel value="Fecha Nacimiento" />
-                                <p:inputText value="#{tprovisionBean.persona.feNacPe}" />
+                                <p:outputLabel for="fecha" value="Fecha Nacimiento" />
+                                <p:inputMask id="fecha" value="#{tprovisionBean.persona.feNacPe}" 
+                                             required="true" requiredMessage="Campo requerido" mask="99/99/9999" >
+                                    <f:validateLength minimum="10"/>
+                                    <p:clientValidator/>
+                                </p:inputMask>
+                                <p:message for="fecha" display="icon"/>
 
-                                <p:outputLabel value="Edad" />
-                                <p:inputText  value="#{tprovisionBean.persona.edadPe}" />
+                                <p:outputLabel for="edad" value="Edad" />
+                                <p:inputText  id="edad" value="#{tprovisionBean.persona.edadPe}"
+                                              required="true" requiredMessage="Campo requerido">
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="edad" display="icon"/>
 
-                                <p:outputLabel  value="Lugar de Nacimiento" />
-                                <p:inputText value="#{tprovisionBean.persona.luNacPe}" style="text-transform: uppercase" />
+                                <p:outputLabel  for="lugar" value="Lugar de Nacimiento" />
+                                <p:inputText id="lugar" value="#{tprovisionBean.persona.luNacPe}" style="text-transform: uppercase" 
+                                             required="true" requiredMessage="Campo requerido">
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="lugar" display="icon"/>
+
                             </h:panelGrid>
                         </p:fieldset>
 
                         <p:fieldset legend="Datos Titulo" style="margin-bottom:20px">
-                            <h:panelGrid columns="4" cellpadding="5">
-                                <p:outputLabel  value="Nombre del Titulo" />
-                                <p:inputText value="#{tprovisionBean.provision.nombProv}" style="text-transform: uppercase" />
+                            <h:panelGrid columns="6" cellpadding="5">
+                                <p:outputLabel  for="titulo" value="Nombre del Titulo" />
+                                <p:inputText id="titulo" value="#{tprovisionBean.provision.nombProv}" style="text-transform: uppercase" 
+                                             required="true" requiredMessage="Campo requerido">
+                                    <f:validateLength minimum="10"/>
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="titulo" display="icon"/>
 
-                                <p:outputLabel  value="Fecha" />
-                                <p:inputText value="#{tprovisionBean.provision.fechaProv}" />
+                                <p:outputLabel for="fechaEmi" value="Fecha Emision" />
+                                <p:inputMask mask="99/99/9999" id="fechaEmi" value="#{tprovisionBean.provision.fechaProv}" 
+                                             required="true" requiredMessage="Campo requerido">
+                                    <f:validateLength minimum="10"/>
+                                    <p:clientValidator/>
+                                </p:inputMask>
+                                <p:message for="fechaEmi" display="icon"/>
 
-                                <p:outputLabel  value="Nro. Carton" />
-                                <p:inputText value="#{tprovisionBean.provision.nroProv}" />
+                                <p:outputLabel for="nroCarton" value="Nro. Carton" />
+                                <p:inputText id="nroCarton" value="#{tprovisionBean.provision.nroProv}" 
+                                             required="true" requiredMessage="Campo requerido" >
+                                    <f:validateLength minimum="3"/>
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="nroCarton" display="icon"/>
+
+                                <p:outputLabel for="txtUniv" value="Universidad" />
+                                <p:selectOneMenu id="txtUniv" value="#{tprovisionBean.persona.univPe}" 
+                                                 required="true" requiredMessage="Seleccione una opcion">
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="NACIONAL SIGLO XX" itemValue="UNSXX" />
+                                    <f:selectItem itemLabel="MAYOR DE SAN ANDRES" itemValue="UMSA" />
+                                    <f:selectItem itemLabel="MAYOR DE SAN SIMON" itemValue="UMSS" />
+                                    <f:selectItem itemLabel="TECNICA DE ORURO" itemValue="UTO" />
+                                    <f:selectItem itemLabel="AUTONOMA TOMAS FRIAS" itemValue="UATF" />
+                                    <f:selectItem itemLabel="MAYOR REAL Y PONTIFICIA DE SAN FRANCISCO XAVIER" itemValue="UMRPSFXCH"/>
+                                    <f:selectItem itemLabel="AUTONOMA GABRIEL RENE MORENO" itemValue="UAGRM"/>
+                                    <f:selectItem itemLabel="AUTONOMA JUAN MISAEL SARACHO" itemValue="UAJMS"/>
+                                    <f:selectItem itemLabel="AUTONOMA DEL BENI, MARISCAL JOSE BALLIVIAN" itemValue="UABJB"/>
+                                    <f:selectItem itemLabel="AMAZONICA DE PANDO" itemValue="UAP"/>
+                                    <f:selectItem itemLabel="PUBLICA DE EL ALTO" itemValue="UPEA"/>
+                                </p:selectOneMenu>
+                                <p:message for="txtUniv" display="icon"/>
+                                
+                                <p:outputLabel for="txtDoc" value="Tipo Documento" />
+                                <p:selectOneMenu id="txtDoc" value="#{tprovisionBean.provision.tipoDoc}" 
+                                                 required="true" requiredMessage="Seleccione una opcion">
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="ACADEMICO" itemValue="ACADEMICO" />
+                                    <f:selectItem itemLabel="PROVISION NACIONAL" itemValue="PROVISION NACIONAL" />
+                                </p:selectOneMenu>
+                                <p:message for="txtDoc" display="icon"/>
+
                             </h:panelGrid>
                         </p:fieldset>    
 
                         <p:fieldset legend="Datos Folio" style="margin-bottom:20px">
-                            <h:panelGrid columns="4" cellpadding="5">
-                                <p:outputLabel  value="Nro. Folio" />
-                                <p:inputText value="#{tprovisionBean.folio.nroFolio}" />
+                            <h:panelGrid columns="6" cellpadding="5">
+                                <p:outputLabel for="nroFolio" value="Nro. Folio" />
+                                <p:inputText id="nroFolio" value="#{tprovisionBean.folio.nroFolio}" 
+                                             required="true" requiredMessage="campo requerido">
+                                    <f:validateLength minimum="3"/>
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="nroFolio" display="icon"/>
 
-                                <p:outputLabel  value="Nro Libro" />
-                                <p:inputText value="#{tprovisionBean.folio.nroLibro}" />
+                                <p:outputLabel for="nroLibro" value="Nro Libro" />
+                                <p:inputText id="nroLibro" value="#{tprovisionBean.folio.nroLibro}" 
+                                             required="true" requiredMessage="Campo requerido">
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="nroLibro" display="icon"/>
 
-                                <p:outputLabel  value="Nro. Titulo" />
-                                <p:inputText value="#{tprovisionBean.folio.nroExpe}" />
+                                <p:outputLabel for="nroTitulo" value="Nro. Titulo" />
+                                <p:inputText id="nroTitulo" value="#{tprovisionBean.folio.nroExpe}" 
+                                             required="true" requiredMessage="Campo requerido" >
+                                    <f:validateLength minimum="3"/>
+                                    <p:clientValidator/>
+                                </p:inputText>
+                                <p:message for="nroTitulo" display="icon"/>
 
-                                <p:outputLabel  value="Fecha Recojo" />
-                                <p:inputText value="#{tprovisionBean.folio.fechaExpe}" />
+                                <p:outputLabel for="fechaReco" value="Fecha Recojo" />
+                                <p:inputMask mask="99/99/9999" id="fechaReco" value="#{tprovisionBean.folio.fechaExpe}" 
+                                             required="true" requiredMessage="Campo requerido">
+                                    <f:validateLength minimum="11"/>
+                                    <p:clientValidator/>
+                                </p:inputMask>
+                                <p:message for="fechaReco" display="icon"/>
 
                             </h:panelGrid>
                         </p:fieldset>    
@@ -107,7 +208,7 @@
                         <h:panelGrid columns="4" cellpadding="5">
                             <p:commandButton value="#{tprovisionBean.accion}" oncomplete="PF('wgdatos').hide();"
                                              update=":listdatos:datosper"
-                                             actionListener="#{tprovisionBean.operar()}" style="margin-right:20px;" />
+                                             validateClient="true" ajax="false" actionListener="#{tprovisionBean.operar()}" style="margin-right:20px;" />
                             <p:commandButton  value="Cancelar" oncomplete="PF('wgdatos').hide();"
                                               update=":listdatos:datosper" style="margin-right:20px;" />
                         </h:panelGrid>

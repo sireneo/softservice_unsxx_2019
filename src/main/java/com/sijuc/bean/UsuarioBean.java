@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import com.sijuc.bean.SessionUtils;
+import com.sijuc.model.Persona;
 
 //@Named(value = "usuarioBean")
 @ManagedBean
@@ -53,8 +54,8 @@ public class UsuarioBean implements Serializable {
         boolean valid;
         valid = UsuarioDAO.validate(nombUser, passUser);
 	if (valid) {
-           // HttpSession session = SessionUtils.getSession();
-                return "principal";
+           //HttpSession session = SessionUtils.getSession();
+                return "principal.xhtml";
         } else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
@@ -62,13 +63,13 @@ public class UsuarioBean implements Serializable {
                             "Datos Incorrectos!!",
                             "Por favor vuelva a introducir nuevamente"));
             limpiar();
-            return "index";
+            return "index.xhmtl?faces-redirect=true";
         }
         
     }
     public void timeout() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("faces/index.xhtml");
-
+        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
+        //return "index.xhtml";
     }
 }

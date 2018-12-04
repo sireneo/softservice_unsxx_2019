@@ -22,13 +22,14 @@ public class PersonaDAO {
         try {
 
             cn.setAutoCommit(false);
-            PreparedStatement st = cn.prepareStatement("INSERT INTO Persona (nombPe,apellPe,ciPe,feNacPe,edadPe,luNacPe) VALUES (?,?,?,?,?,?)");
+            PreparedStatement st = cn.prepareStatement("INSERT INTO Persona (nombPe,apellPe,ciPe,feNacPe,edadPe,luNacPe,univPe) VALUES (?,?,?,?,?,?,?)");
             st.setString(1, per.getNombPe());
             st.setString(2, per.getApellPe());
             st.setString(3, per.getCiPe());
             st.setString(4, per.getFeNacPe());
             st.setInt(5, per.getEdadPe());
             st.setString(6, per.getLuNacPe());
+            st.setString(7, per.getUnivPe());
             st.executeUpdate();
             st.close();
 
@@ -65,20 +66,21 @@ public class PersonaDAO {
         ResultSet rs;
         try {
             //this.Conectar();
-            PreparedStatement stm = cn.prepareStatement("select * from Persona");
+            PreparedStatement stm = cn.prepareStatement("select nombPe,apellPe,ciPe,feNacPe,univPe,u.nombUser,u.tipoUser from Persona join Usuario as u on Persona.idPe=u.idPe");
             rs = stm.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Persona per = new Persona();
-                per.setIdPe(rs.getInt("idPe"));
                 per.setNombPe(rs.getString("nombPe"));
                 per.setApellPe(rs.getString("apellPe"));
                 per.setCiPe(rs.getString("ciPe"));
-                per.setEdadPe(rs.getInt("edadPe"));
                 per.setFeNacPe(rs.getString("feNacPe"));
-                per.setLuNacPe(rs.getString("luNacPe"));
-
+                per.setUnivPe(rs.getString("univPe"));
+                
+                per.getUser().setNombUser(rs.getString("nombUser"));
+                per.getUser().setTipoUser(rs.getString("tipoUser"));
                 lista.add(per);
+                
             }
             rs.close();
         } catch (Exception e) {
@@ -160,7 +162,7 @@ public class PersonaDAO {
         Connection cn = DAO.getConnection();
         try {
             //this.Conectar();
-            PreparedStatement stm = cn.prepareStatement(" select nombPe, apellPe, ciPe, tp.idProv, tp.nombProv, tp.nroProv, tp.fechaProv, fo.nroExpe, fo.fechaExpe  from Persona join Tprovision as tp on Persona.idPe=tp.idPe join Folio as fo on tp.idProv=fo.idProv");
+            PreparedStatement stm = cn.prepareStatement(" select nombPe, apellPe, ciPe, univPe, tp.idProv, tp.nombProv, tp.nroProv, tp.fechaProv, tp.tipoDoc, fo.nroExpe, fo.fechaExpe  from Persona join Tprovision as tp on Persona.idPe=tp.idPe join Folio as fo on tp.idProv=fo.idProv");
             rs = stm.executeQuery();
             lista = new ArrayList();
 
@@ -169,11 +171,13 @@ public class PersonaDAO {
                 pe.setNombPe(rs.getString("nombPe"));
                 pe.setApellPe(rs.getString("apellPe"));
                 pe.setCiPe(rs.getString("ciPe"));
+                pe.setUnivPe(rs.getString("univPe"));
 
                 pe.getProvis().setIdProv(rs.getInt("idProv"));
                 pe.getProvis().setNombProv(rs.getString("nombProv"));
                 pe.getProvis().setFechaProv(rs.getString("fechaProv"));
                 pe.getProvis().setNroProv(rs.getInt("nroProv"));
+                pe.getProvis().setTipoDoc(rs.getString("tipoDoc"));
 
                 pe.getProvis().getFolio().setNroExpe(rs.getInt("nroExpe"));
                 pe.getProvis().getFolio().setFechaExpe(rs.getString("fechaExpe"));
@@ -200,13 +204,10 @@ public class PersonaDAO {
         ResultSet rs;
         Connection cn = DAO.getConnection();
         try {
-            //this.Conectar();
             PreparedStatement stm = cn.prepareStatement("select nombPe, apellPe, ciPe, tp.nombProv, tp.fechaProv, fo.nroExpe from Persona join Tprovision as tp on Persona.idPe=tp.idPe join Folio as fo on tp.idProv=fo.idProv where fo.nroExpe = ?");
             stm.setInt(1, per.getProvis().getFolio().getNroExpe());
-            //stm.setString(2, per.getCiPe());
             rs = stm.executeQuery();
 
-          //  lista = new ArrayList();
             if (rs.next()) {
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -220,11 +221,8 @@ public class PersonaDAO {
                    
                     pe.getProvis().getFolio().setNroExpe(rs.getInt("nroExpe"));
                    
-            //        lista.add(pe);
-                    //System.out.print("nombres;" + rs.getString("nombPe"));
-                    //System.out.println("provis" + rs.getString("fechaProv"));
                     System.out.println("folio: " + rs.getString("nroExpe"));
-                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Titulo Verifcado", "Nombres: "
+                RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Titulo Verifcado", "Nombres: "
                                              + rs.getString("nombPe")+" "+rs.getString("apellPe")+"<br/>Titulo: "+rs.getString("nombProv")
                                               + "<br/>Nro.: "+rs.getInt("nroExpe")+"  Fecha Emision: "+rs.getString("fechaProv")));
 

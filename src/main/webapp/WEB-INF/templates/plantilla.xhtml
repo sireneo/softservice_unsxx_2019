@@ -13,7 +13,7 @@
         <title>VERIFICACION DE TITULOS</title>
     </h:head>
     <h:body>
-   <p:idleMonitor timeout="30000" >
+   <p:idleMonitor timeout="500000" >
         <p:ajax event="idle" listener="#{usuarioBean.timeout()}" oncomplete="alert('Session Finalizada...')"/>
     </p:idleMonitor>
    
@@ -23,16 +23,15 @@
                  <p:growl id="messages"/>
  
             <p:menubar>
-                <p:menuitem value="Home" url="principal.xhtml" icon="pi pi-home" />
-                <p:submenu label="Titulos" icon="pi pi-pencil">
-                    <p:menuitem value="Academico" url="faces/academico.xhtml" icon="pi pi-angle-double-left" />
-                    <p:menuitem value="Provision" url="faces/provision.xhtml" icon="pi pi-angle-double-right" />
-                </p:submenu>
-                <p:menuitem value="Cuenta" url="faces/persona.xhtml"  icon="pi pi-file"/>
+                <p:menuitem value="Home" url="faces/principal.xhtml" icon="pi pi-home" />
+                <p:menuitem value="Titulos" url="faces/provision.xhtml" icon="pi pi-angle-double-right" />
+                <p:menuitem value="Cuenta" url="faces/persona.xhtml" icon="pi pi-file"/>
                 
                 <f:facet name="options">
                     <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Buscar"/>
-                    <p:commandButton type="button" value="Cerrar Sesion" icon="pi pi-home" />
+                    <p:commandButton style="background-color: buttonface" value="Cerrar Sesion"
+                                     actionListener="#{usuarioBean.timeout()}" icon="pi pi-home" 
+                                     action="faces/index.xhtml?faces-redirect=true"/>
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -44,7 +43,10 @@
         </div>
 
         <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+            <ui:insert name="bottom">
+                <p:separator/>
+        SoftService-unsxx, Copyright © 2018 Todos los derechos reservados.
+            </ui:insert>
         </div>
 
     </h:body>

@@ -6,11 +6,20 @@ import com.sijuc.model.Persona;
 import com.sijuc.model.Tprovision;
 import com.sijuc.model.Usuario;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
 
 @ManagedBean 
 @ViewScoped
@@ -155,6 +164,7 @@ public class PersonaBean implements Serializable{
         try {
             dao = new PersonaDAO();
             dao.verificartitulo(persona);
+            this.limpiar();
           } catch (Exception e) {
             throw e;
         }
@@ -180,10 +190,41 @@ public class PersonaBean implements Serializable{
             dao = new PersonaDAO();
             dao.eliminar(per);
             this.listar();
-          // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informe", "Datos Registrados.");
-           //PrimeFaces.current().dialog().showMessageDynamic(message);
         } catch (Exception e) {
             throw e;
         }
+    }
+    public void calcularedad(SelectEvent event) throws ParseException {
+
+        System.out.println("inside get age");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected",
+                        format.format(event.getObject())));
+        String dd=null;
+        dd=format.format(event.getObject());
+        System.out.println("date dd "+dd);
+        Date date = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(dd);
+        System.out.println("date+++++++++"+date);
+        Calendar birth = new GregorianCalendar();
+        Calendar today = new GregorianCalendar();
+        int calculatedAge = 0;
+        int factor = 0;
+
+        Date currentDate = new Date(); // current date
+        String dob = null;
+        System.out.println("DOB" + dob);
+        birth.setTime(date);
+        System.out.println("set birth" + birth);
+        today.setTime(currentDate);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < birth.get(Calendar.DAY_OF_YEAR)) {
+            factor = -1;
+
+        }
+        calculatedAge = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR)
+                + factor;
+        System.out.println("age is " + calculatedAge);
     }
 }
