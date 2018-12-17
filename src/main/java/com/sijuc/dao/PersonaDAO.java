@@ -184,8 +184,7 @@ public class PersonaDAO {
 
                 lista.add(pe);
                 //System.out.print("nombres;" + rs.getString("nombPe"));
-                //System.out.println("provis" + rs.getString("fechaProv"));
-                //System.out.println("folio: " + rs.getString("fechaExpe"));
+                
             }
             rs.close();
         } catch (Exception e) {
@@ -224,8 +223,8 @@ public class PersonaDAO {
                     System.out.println("folio: " + rs.getString("nroExpe"));
                 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Titulo Verifcado", "Nombres: "
                                              + rs.getString("nombPe")+" "+rs.getString("apellPe")+"<br/>Titulo: "+rs.getString("nombProv")
-                                              + "<br/>Nro.: "+rs.getInt("nroExpe")+"  Fecha Emision: "+rs.getString("fechaProv")));
-
+                                             + "<br/>Nro.: "+rs.getInt("nroExpe")+"  Fecha Emision: "+rs.getString("fechaProv")));
+                                                
                 }
                 rs.close();
                 

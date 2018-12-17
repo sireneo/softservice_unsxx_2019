@@ -9,7 +9,6 @@
     <h:head>
         <title>Verifique su Titulo</title>
     </h:head>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
    <style type="text/css">
         .ui-panel, div.ui-state-hover {
             margin: 10px;
@@ -63,17 +62,14 @@
                         <p:separator/>
                         <h:panelGrid columns="3" >
                             <h:outputLabel for="nrotitulo" value="Nro. Titulo:" />
-                            <p:inputText id="nrotitulo" 
+                            <p:password id="nrotitulo" 
                                         required="true" value="#{personaBean.persona.provis.folio.nroExpe}" requiredMessage="Campo requerido" >
-                            </p:inputText>
+                            </p:password>
                             <p:message for="nrotitulo" display="icon"/>
-                            <div class="g-recaptcha" data-sitekey="6LcC1H4UAAAAAPSDhfSsA2xepV4hYWmTlyJez3Hp"></div>
-
                             <p:commandButton resetValues="true" process="@this" value="Verificar" actionListener="#{personaBean.verificar()}" validateClient="true" ajax="false" />
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
-                
             </ui:insert>
         </div>
         <p:separator></p:separator>
