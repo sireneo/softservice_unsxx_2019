@@ -9,23 +9,47 @@
     <h:head>
         <title>Verifique su Titulo</title>
     </h:head>
-   <style type="text/css">
-        .ui-panel, div.ui-state-hover {
-            margin: 10px;
-            width:600px;
+     <script type="text/javascript">
+      function alCargar(){
+        document.getElementById("imagen").width = document.body.offsetWidth;
+        document.getElementById("imagen").heigth = document.body.offsetHeight;
+
+    }
+    </script>
+    <style type="text/css">
+        .ui-panel {
+            width:500px;
             align: center;
         }
 
-        .ui-dashboard-column {
-            width:220px;
+        /** Demo **/
+        .ui-grid-row .ui-grid-col-2,
+        .ui-grid-row .ui-grid-col-10 {
+            padding: 0.5em 0;
+        }
+
+        .ui-outputlabel {
+            font-weight: bold;
+        }
+
+        .ui-orderlist .ui-orderlist-list {
+            height: auto;
+        }
+
+        .ui-orderlist .ui-grid-row .ui-grid-col-2, 
+        .ui-orderlist .ui-grid-row .ui-grid-col-10 {
+            padding: 0;
         }
     </style>
+
     <f:event listener="#{personaBean.limpiar()}" type="preRenderView" />
-    <h:body>
+    <h:body onload="alCargar()">
 
         <div id="top" align="right">
             <ui:insert name="top">
-               <p:graphicImage   height="150" width="1560" name="/images/banner-unsxx.jpg" />
+                <div id="top" align="center" style="color:#FFBBGG;">
+                    <p:graphicImage  id="imagen" name="/images/banner-unsxx.jpg" />
+                </div>
                 <h:form id="formlogin">   
                     <p:commandButton value="Personal Autorizado" onclick="PF('dlg').show();" 
                                      action="principal.xhtml?faces-redirect=true" style="background-color: #c2dfef"/>
@@ -62,7 +86,7 @@
                         <p:separator/>
                         <h:panelGrid columns="3" >
                             <h:outputLabel for="nrotitulo" value="Nro. Titulo:" />
-                            <p:password id="nrotitulo" 
+                            <p:password id="nrotitulo" autocomplete="off"
                                         required="true" value="#{personaBean.persona.provis.folio.nroExpe}" requiredMessage="Campo requerido" >
                             </p:password>
                             <p:message for="nrotitulo" display="icon"/>
@@ -76,7 +100,7 @@
         <div id="bottom" align="center" style="color:#FFBBGG;">
             <ui:insert name="bottom">
                 <p:outputLabel value="SoftService-unsxx, Copyright © 2018 Todos los derechos reservados."/><br/>
-            <p:graphicImage name="/images/sistema.jpg" width="850" height="70"/>
+                <p:graphicImage name="/images/sistema.jpg" width="850" height="70"/>
             </ui:insert>
         </div>
     </h:body>

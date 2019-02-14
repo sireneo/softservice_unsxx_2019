@@ -1,4 +1,4 @@
- PrimeFaces.locales [' es '] = { 
+PrimeFaces.locales [' es '] = { 
                 closeText:' Cerrar ', 
                 prevText:' Anterior ', 
                 nextText:' Siguiente ', 
