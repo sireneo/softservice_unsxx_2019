@@ -19,7 +19,7 @@ public class DAO {
       public static Connection getConnection() { 
           try {
                 Class.forName("org.mariadb.jdbc.Driver").newInstance();
-                Connection con = DriverManager.getConnection("jdbc:mariadb:loadbalance://192.168.1.4,192.168.1.6/verificadbd","root", "jehova");
+                Connection con = DriverManager.getConnection("jdbc:mariadb:loadbalance://192.168.1.4,192.168.1.6/verificadbd?user=root&sessionVariables=max_statement_time=1000&password=jehova");
                 System.out.println("conexion exitosa");
                 return con;
           } catch (Exception ex) {
