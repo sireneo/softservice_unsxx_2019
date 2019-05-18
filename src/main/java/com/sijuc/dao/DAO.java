@@ -19,7 +19,9 @@ public class DAO {
       public static Connection getConnection() { 
           try {
                 Class.forName("org.mariadb.jdbc.Driver").newInstance();
-                Connection con = DriverManager.getConnection("jdbc:mariadb:loadbalance://192.168.1.4,192.168.1.6/verificadbd?user=root&sessionVariables=max_statement_time=1000&password=jehova");
+                //Connection con = DriverManager.getConnection("jdbc:mariadb://h7xe2knj2qb6kxal.cbetxkdyhwsb.us-east-1.rds.amazonaws.com/xomhmx9n32253lbc?user=w4ikmq88ekxwwusb&password=p5ujwra3wfiss1c4");
+                Connection con = DriverManager.getConnection("jdbc:mariadb://192.168.1.7:3306/tesisdb?user=maxscale&password=jehova");
+                
                 System.out.println("conexion exitosa");
                 return con;
           } catch (Exception ex) {

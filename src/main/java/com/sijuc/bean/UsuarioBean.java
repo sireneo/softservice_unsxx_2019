@@ -55,15 +55,13 @@ public class UsuarioBean implements Serializable {
         valid = UsuarioDAO.validate(nombUser, passUser);
 	if (valid) {
            //HttpSession session = SessionUtils.getSession();
-                return "principal.xhtml";
+                return "principal";
         } else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Datos Incorrectos!!",
-                            "Por favor vuelva a introducir nuevamente"));
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,"Datos Incorrectos!!","Por favor vuelva a introducir nuevamente"));
             limpiar();
-            return "index.xhmtl?faces-redirect=true";
+            return "index";
         }
         
     }
