@@ -9,12 +9,12 @@
     <h:head>
         <title>Verifique su Titulo</title>
     </h:head>
-    <script type="text/javascript">
-        function alCargar() {
-            document.getElementById("imagen").width = document.body.offsetWidth;
-            document.getElementById("imagen").heigth = document.body.offsetHeight;
+     <script type="text/javascript">
+      function alCargar(){
+        document.getElementById("imagen").width = document.body.offsetWidth;
+        document.getElementById("imagen").heigth = document.body.offsetHeight;
 
-        }
+    }
     </script>
     <style type="text/css">
         .ui-panel {
@@ -47,7 +47,7 @@
 
         <div id="top" align="right">
             <ui:insert name="top">
-                <div id="top"  style="color: #ece3a5;">
+                <div id="top" >
                     <p:graphicImage  id="imagen" name="/images/banner-unsxx.jpg" />
                 </div>
             </ui:insert>
@@ -55,24 +55,25 @@
         <p:separator></p:separator>
         <div id="content" class="center_content" align="center" >
             <ui:insert name="content">
-                <h:form>   
+                <h:form>
                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-                    <p:panel id="basic" header="VERIFICACION DE TITULOS UNIVERSITARIOS" footer="Los datos proporcionados estan protegidos" style="margin-bottom:30px">
+                     <p:panel id="basic" header="ADMINISTRACION DE TITULOS Y DIPLOMAS" footer="Los datos proporcionados estan protegidos" style="margin-bottom:30px">
                         <h:panelGrid columns="3" cellpadding="8">
                             <p:graphicImage name="/images/unsxx.jpeg" width="45" height=""/>
                             <h:outputText
-                                value="Por medio de este servicio Usted puede Verificar la autenticidad de los titulos emitido
-                                por la UNSXX. Para ello,introduzca el número de Titulo que se encuentra
-                                situado en el titulo" />
+                                value="Favor introduzca la cuenta de admnistracion para iniciar session!!" />
                         </h:panelGrid>
                         <p:separator/>
                         <h:panelGrid columns="3" >
-                            <h:outputLabel for="nrotitulo" value="Nro. Titulo:" />
-                            <p:password id="nrotitulo" autocomplete="off"
-                                        required="true" value="#{personaBean.persona.provis.folio.nroExpe}" requiredMessage="Campo requerido" >
+                            <h:outputLabel for="username" value="Usuario:" />
+                            <p:inputText id="username" value="#{usuarioBean.nombUser}" required="true" requiredMessage="Campo requerido" />
+                            <p:message for="username" display="icon"/>
+
+                            <h:outputLabel for="password" value="Clave:" />
+                            <p:password id="password" required="true" value="#{usuarioBean.passUser}" requiredMessage="Campo requerido" >
                             </p:password>
-                            <p:message for="nrotitulo" display="icon"/>
-                            <p:commandButton update="growl" resetValues="true" process="@this" value="Verificar" actionListener="#{personaBean.verificar()}" validateClient="true" ajax="false" />
+                            <p:message for="password" display="icon"/>
+                            <p:commandButton  update="growl" process="@this" value="Ingresar" action="#{usuarioBean.validarcuenta()}" validateClient="true" ajax="false" />
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
@@ -81,7 +82,7 @@
         <p:separator></p:separator>
         <div id="bottom" align="center" style="color:#FFBBGG;">
             <ui:insert name="bottom">
-                <p:outputLabel value="SoftService-unsxx, Copyright © 2018 Todos los derechos reservados."/><br/>
+                <p:outputLabel value="SoftService-unsxx, Copyright © 2019 Todos los derechos reservados."/><br/>
                 <p:graphicImage name="/images/sistema.jpg" width="850" height="70"/>
             </ui:insert>
         </div>

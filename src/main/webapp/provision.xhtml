@@ -38,13 +38,13 @@
                         <p:column headerText="Fecha Emision" filterBy="#{provi.provis.fechaProv}" filterMatchMode="exact">
                             <p:outputLabel value="#{provi.provis.fechaProv}"/>
                         </p:column>
-                        <p:column headerText="Nombre del Titulo" filterBy="#{provi.provis.nombProv}" filterMatchMode="contains">
+                        <p:column headerText="Diploma/Titulo" filterBy="#{provi.provis.nombProv}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.provis.nombProv}" />
                         </p:column>
                         <p:column headerText="Nro Carton" filterBy="#{provi.provis.nroProv}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.provis.nroProv}" />
                         </p:column>
-                        <p:column headerText="Titulo" filterBy="#{provi.provis.tipoDoc}" filterMatchMode="contains">
+                        <p:column headerText="Tipo" filterBy="#{provi.provis.tipoDoc}" filterMatchMode="contains">
                             <p:outputLabel value="#{provi.provis.tipoDoc}" />
                         </p:column>
                         <p:column headerText="Fecha Recojo" filterBy="#{provi.provis.folio.fechaExpe}" filterMatchMode="contains">
@@ -162,7 +162,7 @@
                                                  required="true" requiredMessage="Seleccione una opcion">
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                     <f:selectItem itemLabel="ACADEMICO" itemValue="ACADEMICO" />
-                                    <f:selectItem itemLabel="PROVISION NACIONAL" itemValue="PROVISION NACIONAL" />
+                                    <f:selectItem itemLabel="PROVISION NACIONAL" itemValue="PROVISION NAL." />
                                 </p:selectOneMenu>
                                 <p:message for="txtDoc" display="icon"/>
 
@@ -174,7 +174,7 @@
                                 <p:outputLabel for="nroFolio" value="Nro. Folio" />
                                 <p:inputText id="nroFolio" value="#{tprovisionBean.folio.nroFolio}" 
                                              required="true" requiredMessage="campo requerido">
-                                    <f:validateLength minimum="3"/>
+                                    <f:validateLength minimum="2"/>
                                     <p:clientValidator/>
                                 </p:inputText>
                                 <p:message for="nroFolio" display="icon"/>
@@ -182,6 +182,7 @@
                                 <p:outputLabel for="nroLibro" value="Nro Libro" />
                                 <p:inputText id="nroLibro" value="#{tprovisionBean.folio.nroLibro}" 
                                              required="true" requiredMessage="Campo requerido">
+                                    <f:validateLength minimum="1"/>
                                     <p:clientValidator/>
                                 </p:inputText>
                                 <p:message for="nroLibro" display="icon"/>
@@ -189,7 +190,7 @@
                                 <p:outputLabel for="nroTitulo" value="Nro. Titulo" />
                                 <p:inputText id="nroTitulo" value="#{tprovisionBean.folio.nroExpe}" 
                                              required="true" requiredMessage="Campo requerido" >
-                                    <f:validateLength minimum="3"/>
+                                    <f:validateLength minimum="2"/>
                                     <p:clientValidator/>
                                 </p:inputText>
                                 <p:message for="nroTitulo" display="icon"/>
@@ -197,7 +198,7 @@
                                 <p:outputLabel for="fechaReco" value="Fecha Recojo" />
                                 <p:inputMask mask="99/99/9999" id="fechaReco" value="#{tprovisionBean.folio.fechaExpe}" 
                                              required="true" requiredMessage="Campo requerido">
-                                    <f:validateLength minimum="11"/>
+                                    <f:validateLength minimum="9" maximum="10"/>
                                     <p:clientValidator/>
                                 </p:inputMask>
                                 <p:message for="fechaReco" display="icon"/>
